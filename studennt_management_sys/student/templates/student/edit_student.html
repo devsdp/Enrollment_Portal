@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>UPDATE {{ student.first_name }}'s DETAILS</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group" style="max-width: 300px;">
+      <label for="enrollment_number">ENROLLMENT_NO :</label>
+      <input type="text" class="form-control" id="enrollment_number" name="enrollment_number" value="{{ student.enrollment_number }}" disabled>
+    </div>
+    <div class="form-group" style="max-width: 300px;">
+      <label for="name">FIRST NAME :</label>
+      <input type="text" class="form-control" id="name" name="first_name" value="{{ student.first_name }}">
+    </div>
+    <div class="form-group" style="max-width: 300px;">
+      <label for="name">LAST NAME :</label>
+      <input type="text" class="form-control" id="name" name="last_name" value="{{ student.last_name }}">
+    </div>
+    <div class="form-group" style="max-width: 300px;">
+      <label for="program">PROGRAM :</label>
+      <select class="form-control" id="program" name="program">
+        <option value="{{ student.program }}">{{ student.program }}</option>
+        {% for program in programs %}
+          {% if program != student.program %}
+            <option value="{{ program }}">{{ program }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group" style="max-width: 300px;">
+      <label for="village">VILLAGE :</label>
+      <select class="form-control" id="village" name="village">
+        <option value="{{ student.village }}">{{ student.village }}</option>
+        {% for village in villages %}
+          {% if village != student.village %}
+            <option value="{{ village }}">{{ village }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  
+    <div class="form-group" style="max-width: 300px;">
+      <label for="block">BLOCK :</label>
+      <select class="form-control" id="block" name="block">
+        <option value="{{ student.block }}">{{ student.block }}</option>
+        {% for block in blocks %}
+          {% if block != student.block %}
+            <option value="{{ block }}">{{ block }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group" style="max-width: 300px;">
+      <label for="district">DISTRICT :</label>
+      <select class="form-control" id="district" name="district">
+        <option value="{{ student.district }}">{{ student.district }}</option>
+        {% for district in districts %}
+          {% if district != student.district %}
+            <option value="{{ district }}">{{ district }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group" style="max-width: 300px;">
+      <label for="state">STATE :</label>
+      <select class="form-control" id="state" name="state">
+        <option value="{{ student.state }}">{{ student.state }}</option>
+        {% for state in states %}
+          {% if state != student.state %}
+            <option value="{{ state }}">{{ state }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">UPDATE</button>
+  </form>
+</div>
+{% endblock %}

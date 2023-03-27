@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="village-name">{{ village.name }}</div>
+  <h2 class="students-heading">STUDENTS <span class="students-count">({{ students|length }})</span></h2>
+  <ul class="students-list">
+    {% for student in students %}
+      <li class="student-item">{{ forloop.counter }} <a href="{% url 'student:student_detail' student.pk %}" class="student-name">{{ student.first_name }} {{ student.last_name }}</a></li>
+    {% empty %}
+      <li class="no-students-message">NO STUDENTS AVAILABLE.</li>
+    {% endfor %}
+  </ul>
+
+<style>
+  .village-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  
+  .students-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  
+  .students-count {
+    font-size: 18px;
+    font-weight: normal;
+    margin-left: 10px;
+  }
+  
+  .students-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .student-item {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .student-name {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: red;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  
+  .student-name:hover {
+    background-color: darkred;
+    color: white;
+  }
+  
+  .no-students-message {
+    font-style: italic;
+    margin-top: 10px;
+  }
+</style>
+{% endblock %}

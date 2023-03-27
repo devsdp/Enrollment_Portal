@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h3>GENERATE CSV </h2>
+    <hr>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <select class="form-control" id="states" name="states" style="max-width: 200px;">
+          <option value="">ALL STATES</option>
+          {% for state in states %}
+            <option value="{{ state }}">{{ state }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-danger">DOWNLOAD CSV</button>
+    </form>
+  </div>
+<style>
+    .form-group label {
+        font-weight: bold;
+      }
+      
+      .form-group select {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 6px 12px;
+      }
+      
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+      
+      .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+      }
+      
+      .btn-primary:focus,
+      .btn-primary.focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+      }
+    </style>      
+{% endblock %}
+     
+
+
+
+
+

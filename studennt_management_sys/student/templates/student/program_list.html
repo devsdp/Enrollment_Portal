@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h3 class="text-center my-4">PROGRAM LIST</h3>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <ul class="program-list">
+          {% for program in programs|dictsort:"name" %}
+            <li><a href="{% url 'student:program_detail' program.pk %}">{{ program.name }}</a></li>
+          {% empty %}
+            <li>NO PROGRAMS AVAILABLE.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .program-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      font-size: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .program-list li {
+      text-align: center;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 10px;
+      border-radius: 15px;
+      animation: fade-in 0.5s ease;
+    }
+
+    .program-list li:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .program-list li a {
+      text-decoration: none;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .program-list li a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+
+    @media (max-width: 767px) {
+      .program-list li {
+        width: 100%;
+      }
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .container {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+{% endblock %}
