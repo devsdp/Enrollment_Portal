@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 class State(models.Model):
     name = models.CharField(max_length=100)
@@ -38,6 +39,7 @@ class Program(models.Model):
         return self.name
 
 
+
 class Student(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -47,7 +49,18 @@ class Student(models.Model):
     district = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     enrollment_number = models.IntegerField(default=0)
+    email_regex = RegexValidator(
+        regex=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+        message='Enter a valid email address.'
+    )
+    email = models.CharField(max_length=254, validators=[email_regex])
+    phone_regex = RegexValidator(
+        regex=r'^\+?1?\d{9,15}$',
+        message='Enter a valid phone number.'
+    )
+    phone = models.CharField(max_length=17, validators=[phone_regex])
     is_active = models.BooleanField(default=True)
+    
     def save(self, *args, **kwargs):
         if not self.pk:
            
@@ -61,7 +74,7 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.enrollment_number} {self.first_name} {self.last_name}"
-    
+
     
 
 

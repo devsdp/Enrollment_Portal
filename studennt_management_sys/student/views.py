@@ -139,7 +139,7 @@ def program_detail(request, program_id):
     return render(request, 'student/program_detail.html', {'program': program, 'students': students})
 
 def student_list(request):
-    students = Student.objects.all()
+    students = Student.objects.all().values('id', 'first_name', 'last_name', 'program', 'block', 'village', 'district', 'state', 'enrollment_number', 'email', 'phone')
     program_counts = Student.objects.values('program').annotate(count=Count('program'))
     village_counts = Student.objects.values('village').annotate(count=Count('village'))
     block_counts = Student.objects.values('block').annotate(count=Count('block'))
@@ -154,6 +154,8 @@ def student_list(request):
         'state_counts': state_counts,
     }
     return render(request, 'student/student_list.html', context)
+
+
 
 @login_required(login_url='login/')
 def student_detail(request, pk):
