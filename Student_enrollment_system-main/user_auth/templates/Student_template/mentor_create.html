@@ -1,0 +1,399 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+</head>
+
+
+    <div class="content-page">
+      <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+          <!-- start page title -->
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box">
+                <h4 class="page-title">Create Mentor</h4>
+    
+              </div>
+            </div>
+          </div>
+          <!-- end page title -->
+
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="card">
+                <div class="card-body">
+
+                  <!-- <h4 class="header-title mb-3">Create User</h4> -->
+
+                  <form method="post" id="mentorcreate">
+                    <div id="basicwizard">
+
+
+
+                      <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                        <li class="nav-item">
+                          <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab" class="nav-link">
+                            <!-- <span class="number">1</span> -->
+                            <span class="d-none d-sm-inline">Create Mentor</span>
+                          </a>
+                        </li>
+
+                      </ul>
+
+
+                      <div class="tab-content b-0 mb-0">
+                        <div class="tab-pane" id="basictab1">
+                          <div class="row">
+                            <div class="col-12">
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="firstname">Name :</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control" id="first_name" name="first_name"
+                                    placeholder="Enter the Firstname">
+                                </div>
+                              </div>
+
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="username"> User Name :</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control" id="usersname" name="username"
+                                    placeholder="Enter the Username" required>                                
+                                </div>
+
+                              </div> -->
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                                  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                                </div>
+                              </div>
+                              
+                            
+                              
+                              
+
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                                  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="[+]{1}[0-9]{2}[0-9]{10}" required>
+                                </div>
+                              </div> -->
+                              
+                                   
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                               <input type="number" class="form-control" id="phone_number" name="phone_number"placeholder="Enter the Phone Number" value="+91" maxlength="10">
+                                </div>
+                              </div> -->
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="state">State :</label>
+                                <div class="col-md-9">
+                                  <select id="state" class="form-control" onchange="myState()" name='state'>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="district">District :</label>
+                                <div class="col-md-9">
+                                  <select id="district" class="form-control" onchange="myDistrict()" name='district'>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="block">Block :</label>
+                                <div class="col-md-9">
+                                  <select id="block" onchange="myblock()" class="form-control" name='block'>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="village">Village :</label>
+                                <div class="col-md-9">
+                                  <select id="village" class="form-control" name='village'>                    
+                                  </select>
+                                </div>
+                              </div>
+                             
+
+                            </div> <!-- end col -->
+                          </div> <!-- end row -->
+
+                          <ul class="pager wizard mb-0 list-inline text-end mt-2">
+                            <li class="next list-inline-item">
+                              <input type="submit" class="btn btn-success">
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- end tab pane -->
+
+
+                        <!-- end tab pane -->
+
+
+                      </div> <!-- tab-content -->
+                    </div> <!-- end #basicwizard-->
+                  </form>
+
+                </div> <!-- end card-body -->
+              </div> <!-- end card-->
+            </div> <!-- end col -->
+
+            <!-- end row -->
+
+          </div> <!-- container -->
+
+        </div> <!-- content -->
+
+
+        {% include 'Student_template/footer.html' %}
+
+        {% block extra_js%}
+        <script>
+
+          function getToken() {
+                          // This function should return the user token dynamically
+                          return (localStorage.getItem('token'));
+                      }
+              function myState(){
+                          var x = document.getElementById("state").value
+                          console.log("%%&&***",x)
+                          localStorage.setItem('state_id',x)
+                          $("document").ready(function () {
+              $.ajax({
+              url: "http://127.0.0.1:8000/state/"+x+"/district/",
+              type: "GET",
+              contentType: "application/json",
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                  console.log(res)
+                  var options = "";
+                  for (item of res) {
+                      console.log(item)
+                      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                  }
+                  $("#district").html(options)
+              }
+          })
+          })
+          
+      }
+
+
+      function myDistrict(){
+                          var district_x = document.getElementById("district").value
+                          console.log("%%&&***",district_x)
+                          localStorage.setItem('district_id',district_x)
+                          $("document").ready(function () {
+              $.ajax({
+              url: "http://127.0.0.1:8000/district/"+district_x+"/block/",
+              type: "GET",
+              contentType: "application/json",
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                  console.log(res)
+                  var options = "";
+                  for (item of res) {
+                      console.log(item)
+                      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                  }
+                  $("#block").html(options)
+              }
+          })
+          })
+          
+      }
+
+    function myblock(){
+        var y = document.getElementById("block").value
+        // localStorage.setItem('block_id',y)
+        console.log("block id",y)
+                         
+      $("document").ready(function() {
+              $.ajax({
+              url: "http://127.0.0.1:8000/block/"+y+"/villages/",
+              type: "GET",
+              contentType: "application/json",
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                  console.log(res)
+                  var options = "";
+                  for (item of res) {
+                      console.log(item)
+                      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                  }
+                  $("#village").html(options)
+              }
+          })
+          })
+          
+                      }
+          
+          </script>
+    <script type="text/javascript">
+      function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+      }
+      $("document").ready(function () {
+        $("#mentorcreate").submit(function (e) {
+          e.preventDefault();
+        
+          var firstname = $("#first_name").val();
+          console.log(firstname);
+          // var username = $("#usersname").val();
+          // console.log(username);
+          var PhoneNumber = $("#phone_number").val();
+          console.log(PhoneNumber);
+          var state = $("#state").val();
+          console.log(state);
+          var district = $("#district").val();
+          console.log(district);
+          var block = $("#block").val();
+          console.log(block);
+          var village = $("#village").val();
+          console.log(village);
+
+
+          $.ajax({
+            url: "http://127.0.0.1:8000/mentor_create/",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ "name": firstname , "phone_number": PhoneNumber, "state": state, "block": block, "village": village,"district":district }),
+            headers: {
+              'Authorization': `token ${getToken()}`,
+              'Content-Type': 'application/json'
+            },
+            success: function (data) {
+              console.log(data);
+              localStorage.getItem('token', data.token)
+              console.log(localStorage.getItem('token'))
+              window.location.href = "/home";
+            },
+            error: function () {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Please check your user',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+}
+          });
+
+        });
+      });
+
+  // state get 
+      $("document").ready(function () {
+
+$.ajax({
+    url: "http://127.0.0.1:8000/state_create/",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+        }
+        $("#state").html(options)
+    }
+})
+})
+
+  // district get 
+  $("document").ready(function () {
+
+$.ajax({
+    url: "http://127.0.0.1:8000/create_district/",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+        }
+        $("#district").html(options)
+    }
+})
+})
+
+$("document").ready(function () {
+    
+    $.ajax({
+        url: "http://127.0.0.1:8000/block_create/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#block").html(options)
+        }
+    })
+})
+
+// village get 
+
+$("document").ready(function () {
+    
+    $.ajax({
+        url: "http://127.0.0.1:8000/village_create/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#village").html(options)
+        }
+    })
+})
+    </script>
+      
+{% endblock extra_js%}
+{% endblock %} 

@@ -1,0 +1,1017 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+{% block title %} State Dashboard {% endblock title %}
+{% block content %}
+<!-- Left Sidebar End -->
+
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Welcome !</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">State</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <div class="row">
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-widgets">
+
+
+                                <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                    data-bs-target="#AllocateWork"><i class="fas fa-plus"></i></a>
+
+
+                            </div>
+                            <h4 class="header-title mb-0">Allocated work to Students</h4>
+
+                            <div id="cardCollpase5" class="collapse pt-3 show">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Name of Student</th>
+                                                <th>Work Description</th>
+                                                <th>Allocated By</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="work_allocation">
+
+
+                                            <tr>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table responsive-->
+                            </div> <!-- collapsed end -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <div class="card-widgets">
+                                            <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                            <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false" aria-controls="cardCollpase5"><i class="mdi mdi-minus"></i></a>
+                                            <a href="javascript:;" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                        </div> -->
+                            <h4 class="header-title mb-0">Programs</h4>
+                            
+
+                            <div id="cardCollpase5" class="collapse pt-3 show">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Program ID</th>
+                                                <th>Program Name</th>
+                                                <!-- <th>Total student</th> -->
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="program_table">
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table responsive-->
+                            </div> <!-- collapsed end -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <div class="card-widgets">
+                                            <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                            <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false" aria-controls="cardCollpase5"><i class="mdi mdi-minus"></i></a>
+                                            <a href="javascript:;" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                        </div> -->
+                            <h4 class="header-title mb-0">Block users</h4>
+
+                            <div id="cardCollpase5" class="collapse pt-3 show">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>User Name</th>
+                                                <th>Block Name</th>
+                                                <!-- <th>Total student</th> -->
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="block_table">
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table responsive-->
+                            </div> <!-- collapsed end -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+
+
+            <!-- end row -->
+
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title mb-3">Block Wise Student</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-hover table-centered m-0">
+
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Program</th>
+                                            <th>Block name</th>
+                                            <th>Created By</th>
+                                            <th>Status</th>
+                                            <th>Phone Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="student_with_block">
+
+                                    </tbody>
+                                </table>
+                            </div> <!-- end .table-responsive-->
+                        </div>
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+     <!-- allo edit form -->
+    <div class="modal fade" id="AllocateWork" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Allocate Work</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="student">
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" for="all_student">Student Name</label>
+                            <div class="col-md-10">
+                                <select id="all_student" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-md-2 col-form-label" for="work_description">Work Description</label>
+                            <div class="col-md-10">
+                                <input type="text" id="work_description" class="form-control" value="">
+                            </div>
+                        </div>
+
+
+                        <button type="submit" onclick="submit" class="btn btn-primary">Create
+                            Student</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="top: 155px;">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Work allocation Edit Form</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="work_update">
+                        <div class="row mb-3">
+
+                            <label class="col-md-3 col-form-label" for="work_detail">work detail :</label>
+                            <div class="col-md-9">
+
+                                <input type="text" class="form-control" id="work_detail" name="work_detail"
+                                    placeholder="Enter the First Name">
+                            </div>
+                        </div>
+
+                        <button type="submit" onclick="submit" class="btn btn-primary"> Update Users</button>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+
+            </div>
+        </div>
+</div>
+
+<!-- The DELETE Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this User ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- block all edit Models Pop Up-->
+<div class="modal fade" id="block_edit">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Form</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="block_update">
+                   
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="User_name">User Name :</label>
+                        <div class="col-md-9">
+                            <!-- <input type="text" class="form-control" id="State" name="Mstate_name"
+                                placeholder="Enter the State Name"> -->
+                            <select id="user_e" class="form-control" name='User_name'>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="block_e">Block Name :- </label>
+                        <div class="col-md-9">
+                            <select id="block_e" class="form-control" name="block_e"></select>
+                        </div>
+                    </div>
+                 
+                    <button type="submit" onclick="submit" class="btn btn-primary"> Update </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+<!-- The user block allo DELETE Modal -->
+<div class="modal fade" id="myblockModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this User ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="block_del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div> <!--End The user DELETE Modal -->
+
+{% include 'Student_template/footer.html' %}
+
+{% block extra_js%}
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $("#AllocateWork").submit(function (e) {
+            e.preventDefault();
+            var student_id = $("#all_student").val();
+            var work_detail = $("#work_description").val();
+
+            //   $('#file').change( function(event) {
+            //     debugger;
+            //     console.log("file",URL.createObjectURL(event.target.files[0]))
+            //   });
+
+            // var fil = document.getElementById("#file");
+            // console.log(fil);
+            //   console.log(file);
+            $.ajax({
+                url: "http://127.0.0.1:8000/Work_Allocate/",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ "student_id": student_id, "work_detail": work_detail }),
+                headers: {
+                    'Authorization': `token ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    //   console.log(data);
+                    localStorage.getItem('token', data.token)
+                    console.log(localStorage.getItem('token'))
+                    window.location.href = "/state_dasboard";
+                },
+                error: function () {
+
+                    alert('Please check your name ');
+                }
+            });
+
+        });
+    });
+</script>
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    $("document").ready(function () {
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/get_state_data/",
+            // url: "http://127.0.0.1:8000/All_Student/",
+            // url: "http://127.0.0.1:8000/states/"+ stateId +"/students/",
+            type: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': `token ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
+            success: function (res) {
+                // console.log(res)
+                var options = "";
+                for (item of res) {
+                    // console.log(item);
+                    // console.log("FirstNames: " + item.village[0].students[0].first_name);
+                    if (item != null && item.village != null && item.village.length > 0) {
+                        for (var i = 0; i < item.village.length; i++) {
+                            if (item.village[i] != null && item.village[i].students != null && item.village[i].students.length > 0) {
+                                for (var j = 0; j < item.village[i].students.length; j++) {
+                                    options = options + `<option value="${item.village[i].students[j].id}"> ${item.village[i].students[j].first_name} </option>`;
+                                }
+                            }
+                        }
+                    }
+                    //options = options + `<option value="${item.id}"> ${item.village[0].students[0].first_name} </option>`;
+                }
+                // console.log("options: " + options);
+                $("#all_student").append(options);
+                // console.log("html:---- " + $("#all_student").html());
+            }
+        })
+    })
+</script>
+
+<!-- LOGIN USER SHOW -->
+<script>
+    $("document").ready(function () {
+        var user_name = localStorage.getItem('username')
+        //  console.log(user_name)
+
+        document.getElementById("username").innerHTML = user_name;
+
+
+    });
+</script>
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $.ajax({
+            url: "http://127.0.0.1:8000/Work_Allocate_get/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                // console.log(res);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.student_id.first_name}</td>`;
+                    tbody = tbody + `<td>${item.work_detail}</td>`;
+                    tbody = tbody + `<td>${item.created_by.username}</td>`;
+                    tbody = tbody + `  <td>
+                                     <a href="javascript:;" data-toggle="reload" onclick="FetchworkDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#myModal1"><i class="fas fa-edit"></i></a>
+                                     <a href="#" onclick="deleteItem(${item.id});"data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-trash-alt"></i></a>
+                                                                            
+                                                                                        </td>`;
+
+                    tbody = tbody + `</tr>`;
+                    // console.log(item);
+                }
+                $("#work_allocation").html(tbody);
+            }
+        });
+    });
+
+
+
+</script>
+
+
+<script>
+        function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $.ajax({
+            url: "http://127.0.0.1:8000/get_allocated_program/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                // console.log(res);
+                // localStorage.setItem('y', itemblockname);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.id}</td>`;
+                    tbody = tbody + `<td>${item.program_name}</td>`;
+                    // tbody = tbody + `<td>${item.created_by.username}</td>`;
+                    // localStorage.setItem('y', ${item.block.name});
+                    tbody = tbody + `  <td>
+                        <a href="#" onclick="ViewprogramStudent('${item.id}', '${item.program_name}');"><i class="fas fa-eye"></i></a>
+                        
+                        <a href="javascript:;"data-toggle="reload" onclick="FetchblockDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#block_edit"><i class="fas fa-edit"></i></a>
+                        <a href="#" onclick="blockdeleteItem(${item.id});"data-bs-toggle="modal" data-bs-target="#myblockModal"><i class="fas fa-trash-alt"></i></a>
+                                        </td>`;
+
+                    tbody = tbody + `</tr>`;
+                    // console.log(item);
+                }
+                $("#program_table").html(tbody);
+            }
+        });
+    });
+
+
+    // eye view page
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    // function ViewblockStudent(itemId) {
+    //     window.location.href = '/block_student_view'
+    //     localStorage.setItem('x', itemId);
+    //     localStorage.setItem('y', itemblockname);
+
+    // }
+
+    function ViewprogramStudent(itemId , Itemname) {
+        window.location.href = '/program_student_view';
+        localStorage.setItem('x', itemId);
+    localStorage.setItem('program_name', Itemname);
+    
+
+}
+</script>
+
+
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_allocation_user/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                // console.log(res);
+                // localStorage.setItem('y', itemblockname);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.user.username}</td>`;
+                    tbody = tbody + `<td>${item.block.name}</td>`;
+                    // tbody = tbody + `<td>${item.created_by.username}</td>`;
+                    // localStorage.setItem('y', ${item.block.name});
+                    tbody = tbody + `  <td>
+                        <a href="#" onclick="ViewblockStudent('${item.id}', '${item.block.name}');"><i class="fas fa-eye"></i></a>
+
+                                        </td>`;
+
+                    tbody = tbody + `</tr>`;
+                    // console.log(item);
+                }
+                $("#block_table").html(tbody);
+            }
+        });
+    });
+    // <a href="javascript:;"data-toggle="reload" onclick="FetchblockDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#block_edit"><i class="fas fa-edit"></i></a>
+                        // <a href="#" onclick="blockdeleteItem(${item.id});"data-bs-toggle="modal" data-bs-target="#myblockModal"><i class="fas fa-trash-alt"></i></a>
+
+    // eye view page
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    // function ViewblockStudent(itemId) {
+    //     window.location.href = '/block_student_view'
+    //     localStorage.setItem('x', itemId);
+    //     localStorage.setItem('y', itemblockname);
+
+    // }
+
+    function ViewblockStudent(itemId , Itemname) {
+        window.location.href = '/block_student_view';
+        localStorage.setItem('x', itemId);
+    localStorage.setItem('block_name', Itemname);
+    
+
+}
+
+
+   
+//     function FetchblockDetails(itemId) {
+//         $.ajax({
+//             url: "http://127.0.0.1:8000/block_create/",
+//             type: "GET",
+//             contentType: "application/json",
+//             headers: {
+//                 'Authorization': `token ${getToken()}`,
+//                 'Content-Type': 'application/json'
+//             },
+//             success: function (res) {
+//                 console.log(res)
+//                 var options = "";
+//                 for (item of res) {
+//                     console.log(item)
+//                     options = options + `<option value="${item.name}"> </option>`
+//                 }
+//                 console.log(options)
+//                 $("#block_e").html(options)
+//             }
+//         })
+
+//         // $.ajax({
+//         //     url: "http://127.0.0.1:8000/block_allocation_update/",
+//         //     type: "GET",
+//         //     contentType: "application/json",
+//         //     headers: {
+//         //         'Authorization': `token ${getToken()}`,
+//         //         'Content-Type': 'application/json'
+//         //     },
+//         //     success: function (res) {
+//         //         console.log(res)
+//         //         var options = "";
+//         //         for (item of res) {
+//         //             console.log(item)
+//         //             options = options + `<option value="${item.id}"> ${item.name}  </option>`
+//         //         }
+//         //         console.log(options)
+//         //         $("#user_e").html(options)
+//         //     }
+//         // })
+
+//         // $.ajax({
+//         //     url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+//         //     method: "GET",
+//         //     headers: { "Authorization": `token ${getToken()}` },
+//         //     success: function (data) {
+//         //         // Remove item from the HTML table
+//         //         var username = data.user;
+//         //         console.log('(*&%^%#$#)',username)
+               
+//         //         var Block_name = data.block.name;
+//         //         console.log("******", Block_name)
+
+//         //         document.getElementById("name").value = username;
+//         //         document.getElementById("block").value = Block_name;
+
+//         //     },
+
+//         // });
+
+//         $("document").ready(function () {
+//             $("#block_update").submit(function (e) {
+//                 e.preventDefault();
+
+
+//                 var username = $("#user_e").val();
+
+//                 console.log("%%%%", user_e)
+
+//                 var block = $("#block_e").val();
+
+//                 // console.log(block_e);
+
+
+//                 $.ajax({
+//                     url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+//                     type: "PATCH",
+//                     contentType: "application/json",
+//                     data: JSON.stringify({ "user": username, "block": block }),
+//                     headers: {
+//                         'Authorization': `token ${getToken()}`,
+//                         'Content-Type': 'application/json'
+//                     },
+//                     success: function (data) {
+//                         console.log(data);
+//                         localStorage.getItem('token', data.token)
+//                         console.log(localStorage.getItem('token'))
+//                         window.location.href = "/state_dashboard";
+//                     },
+//                     error: function () {
+
+//                         Swal.fire({
+//                             title: 'Error!',
+//                             text: 'Please check your name',
+//                             icon: 'error',
+//                             confirmButtonText: 'OK'
+//                         });
+//                     }
+//                 });
+//             })
+//         });
+//     }
+
+//     //  delete users 
+
+//     function getToken() {
+//         // This function should return the user token dynamically
+//         return (localStorage.getItem('token'));
+//     }
+//     function blockdeleteItem(itemId) {
+
+
+//         $.ajax({
+//             url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+//             method: "GET",
+//             headers: { "Authorization": `token ${getToken()}` },
+//             success: function (data) {
+
+//                 // Remove item from the HTML table
+//                 var userid = data.id;
+//                 console.log(userid)
+
+
+//             },
+//         });
+
+//         $('#block_del').click(function () {
+//             // Send an AJAX request to delete the user
+//             $.ajax({
+//                 url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+//                 method: "DELETE",
+//                 headers: { "Authorization": `token ${getToken()}` },
+//                 success: function (data) {
+//                     // Reload the page after successful deletion
+//                     window.location.reload();
+//                 },
+//             });
+//         });
+    
+
+
+
+// }
+</script>
+
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_allocation_user/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                // console.log(res);
+                var tbody = "";
+                for (item of res) {
+
+                    tbody = tbody + `<tr>`;
+
+                    if (item != null && item.block.village != null && item.block.village.length > 0) {
+                        for (var i = 0; i < item.block.village.length; i++) {
+                            if (item.block.village[i] != null && item.block.village[i].students != null && item.block.village[i].students.length > 0) {
+                                for (var j = 0; j < item.block.village[i].students.length; j++) {
+
+                                    tbody = tbody + `<tr><td>${item.block.village[i].students[j].first_name}</td>`;
+                                    console.log(item.block.village[i])
+                                    tbody = tbody + `<td>${item.block.village[i].students[j].program_id.program_name}</td>`;
+                                    // console.log(item.block)
+
+                                    tbody = tbody + `<td>${item.block.name}</td>`;
+                                    tbody = tbody + `<td>${item.block.village[i].students[j].created_by.username}</td>`;
+                                    tbody = tbody + `<td>${item.block.village[i].students[j].status}</td>`;
+                                    tbody = tbody + `<td>${item.block.village[i].students[j].phone_number}</td><s/tr>`;
+
+                                }
+
+                            }
+                        }
+                    }
+
+                    tbody = tbody + `</tr>`;
+                    // console.log(item);
+                }
+                $("#student_with_block").html(tbody);
+            }
+        });
+    });
+</script>
+
+<script>
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function FetchworkDetails(itemId) {
+
+    
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Work_Allocate_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+                // Remove item from the HTML table
+                var work_detail = $("#work_detail").val();
+               
+
+                document.getElementById("work_detail").value = work_detail;
+
+            },
+          
+        });
+
+        $("document").ready(function () {
+            $("#work_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var work_detail = $("#work_detail").val();
+
+
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/Work_Allocate_update/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "work_detail": work_detail}),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/state_dasboard";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+//  delete users 
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function deleteItem(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Work_Allocate_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/Work_Allocate_update/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },             
+            });
+        });
+    }
+
+</script>
+
+
+<script>
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function FetchblockDetails(itemId) {
+
+    
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+                // Remove item from the HTML table
+                var block = $("#block_e").val();
+               
+
+                document.getElementById("block_e").value = block;
+
+            },
+          
+        });
+
+        $("document").ready(function () {
+            $("#block_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var block = $("#block_e").val();
+
+
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "block": block}),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/state_dasboard";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+//  delete users 
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function deleteItem(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },             
+            });
+        });
+    }
+
+</script>
+
+
+
+
+          {% endblock extra_js%}
+          {% endblock %}

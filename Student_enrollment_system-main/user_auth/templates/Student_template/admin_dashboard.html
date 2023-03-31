@@ -1,0 +1,2157 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block title %} Admin Dashboard {% endblock title %}
+
+{% block content %}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Admin Dashboard</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <!-- All State   -->
+            <div class="row">
+                <div class="col-xl-2 col-md-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                   
+                                        <h5 class="text-muted fw-normal mt-0 text-truncate" title="All State">
+                                            All State </h5>
+                                        <h3 class="my-2 py-1"><span id="state" data-plugin="counterup"></span>
+                                            <p class="mb-0 text-muted">
+                                                <span class="text-success me-2"><span
+                                                        class="mdi mdi-arrow-up-bold"></span></span>
+                                                <span class="text-nowrap"></span>
+                                            </p>
+                                           
+                                    <script>
+                                        function getToken() {
+                                            // This function should return the user token dynamically
+                                            return (localStorage.getItem('token'));
+                                        }
+                                        fetch('All_state_count/', {
+                                            headers: {
+                                                'Authorization': `token ${getToken()}`
+                                            }
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                document.getElementById('state').innerHTML = JSON.stringify(data.count);
+                                            })
+                                            .catch(error => console.error(error));
+                                    </script>
+                                </div>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="ri-stack-line font-20 text-primary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+
+                <!-- All Block -->
+                <div class="col-xl-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="All Student">All
+                                        District</h5>
+                                    <h3 class="my-2 py-1"><span id="block" data-plugin="counterup"></span>
+                                    </h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><span
+                                                class="mdi mdi-arrow-up-bold"></span></span>
+                                        <span class="text-nowrap"></span>
+                                    </p>
+                                </div>
+                                <script>
+                                    function getToken() {
+                                        // This function should return the user token dynamically
+                                        return (localStorage.getItem('token'));
+                                    }
+                                    fetch('All_district_count/', {
+                                        headers: {
+                                            'Authorization': `token ${getToken()}`
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            document.getElementById('block').innerHTML = JSON.stringify(data.count);
+                                        })
+                                        .catch(error => console.error(error));
+                                </script>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="ri-slideshow-2-line font-20 text-primary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+
+                <!-- All Village -->
+                <div class="col-xl-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="All Village">All
+                                        Blocks</h5>
+                                    <h3 class="my-2 py-1"><span id="block_data"></span></h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><span
+                                                class="mdi mdi-arrow-up-bold"></span></span>
+                                        <span class="text-nowrap"></span>
+                                    </p>
+                                </div>
+                                <script>
+                                    function getToken() {
+                                        // This function should return the user token dynamically
+                                        return (localStorage.getItem('token'));
+                                    }
+                                    fetch('All_block_count/', {
+                                        headers: {
+                                            'Authorization': `token ${getToken()}`
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            document.getElementById('block_data').innerHTML = JSON.stringify(data.count);
+                                        })
+                                        .catch(error => console.error(error));
+                                </script>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="ri-hand-heart-line font-20 text-primary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="All Village">All
+                                        Villages</h5>
+                                    <h3 class="my-2 py-1"><span id="village"></span></h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><span
+                                                class="mdi mdi-arrow-up-bold"></span></span>
+                                        <span class="text-nowrap"></span>
+                                    </p>
+                                </div>
+                                <script>
+                                    function getToken() {
+                                        // This function should return the user token dynamically
+                                        return (localStorage.getItem('token'));
+                                    }
+                                    fetch('All_village_count/', {
+                                        headers: {
+                                            'Authorization': `token ${getToken()}`
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            document.getElementById('village').innerHTML = JSON.stringify(data.count);
+                                        })
+                                        .catch(error => console.error(error));
+                                </script>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="ri-hand-heart-line font-20 text-primary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- All Student -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="All Student"> <a href="/student_view_data">All Students</a></h5>
+                                    <h3 class="my-2 py-1"><span id="Student" data-plugin="counterup"></span>
+                                    </h3>
+
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><span
+                                                class="mdi mdi-arrow-up-bold"></span></span>
+                                        <span class="text-nowrap"></span>
+                                    </p>
+                                </div>
+                                <script>
+                                    function getToken() {
+                                        // This function should return the user token dynamically
+                                        return (localStorage.getItem('token'));
+                                    }
+
+                                    fetch('All_Student_count/', {
+                                        headers: {
+                                            'Authorization': `token ${getToken()}`
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            document.getElementById('Student').innerHTML = JSON.stringify(data.count);
+                                        })
+                                        .catch(error => console.error(error));
+                                </script>
+
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="ri-money-dollar-box-line font-20 text-primary"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dropdown float-end">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Settings</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                            </div>
+                        </div>
+                        <h4 class="header-title mb-3"> <a href='/all_user_view'>All Users</a></h4>
+
+                        <div class="table-responsive">
+                           
+                            <table class="table table-striped table-nowrap table-centered mb-0" id="user_table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>UserName</th>
+                                        <th>Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                </tbody>
+                            </table>
+                        </div> <!-- end table-responsive-->
+                        <h5 class="mt-0 mb-1"> </h5>
+                       
+
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div>
+
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- <div class="card-widgets">
+                                        <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                        <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false" aria-controls="cardCollpase5"><i class="mdi mdi-minus"></i></a>
+                                        <a href="javascript:;" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                    </div> -->
+                        <h4 class="header-title mb-0">Programs</h4>
+                        
+    
+                        <div id="cardCollpase5" class="collapse pt-3 show">
+                            <div class="table-responsive">
+                                <table id ="program_table" class="table table-hover table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Program Name</th>
+                                            <!-- <th>Total student</th> -->
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div> <!-- end table responsive-->
+                        </div> <!-- collapsed end -->
+                    </div> <!-- end card-body -->
+                </div> <!-- end card-->
+            </div> 
+            <!-- end col-->
+
+           
+            <!-- end col-->
+        </div>
+        <!-- end row-->
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <h4 class="header-title mb-4">States</h4>
+                        <div class="d-flex">
+                            <div class="flex-1">
+                                <div class="table-responsive">
+                                    <table id="state_name" class="table table-striped table-nowrap table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Name</th>
+                                                <th>View Students</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+
+                                    </table>
+
+                                    
+                                </div> <!-- end table-responsive-->
+
+                                <h5 class="mt-0 mb-1"> </h5>
+                                
+                                
+                            </div>
+                        </div>
+
+
+                        <!-- The state DELETE Modal -->
+                        <div class="modal fade" id="state_delete">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="top: 155px;">
+
+                                    <!-- Modal Header -->
+                                    <form id="delet_users">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete State</h4>
+                                            <button type="button" class="close"
+                                                data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            Are you sure you want to Delete this state ?
+                                        </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger"
+                                                data-dismiss="modal">Cancel</button>
+                                            <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                                            <button type="submit" class="btn btn-danger" id="s_l"
+                                                data-dismiss="modal">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>  <!-- End The state DELETE Modal -->
+                    </div>
+                    <!-- end card-body -->
+                </div>
+                <!-- end card-->
+            </div>
+
+
+
+
+
+            <div class="col-lg-6">
+                <!-- Todo-->
+                <div class="card">
+                    <div class="card-body">
+                       
+                        <h4 class="header-title mb-4"> Blocks </h4>
+                        <div class="d-flex">
+                            <div class="flex-1">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-nowrap table-centered mb-0" id="blockname">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            
+                                        </tbody>
+                                    </table>
+                                    <!-- <table class="table table-striped table-nowrap table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for block in blocks %}
+                                            <tr>
+                                                <td>
+                                                    {{ block.id }}
+                                                </td>
+                                                <td>
+                                                    {{ block.name }}
+                                                </td>
+                                                <td>
+                                                    <a href="#"  onclick="deleteblock('{{block.id}}');" data-toggle="modal" data-target="#block_del" ><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="#" onclick="ViewblockStudent('{{block.id}}','{{block.name}}');"><i class="fas fa-eye"></i></a>
+                                                    </td>
+                                            </tr>
+                                            {% endfor %}
+                                            
+                                        </tbody>
+                                    </table> -->
+                                    
+                                </div>
+                                <h5 class="mt-0 mb-1"> </h5>
+                                <!-- <nav aria-label="Page navigation example">
+                                    {% if blocks.has_other_pages %} -->
+
+                                    <!-- <ul class="pagination">
+                                        {% if blocks.has_previous %}
+                                      <li class="page-item"><a class="page-link" href="?block_page={{ blocks.previous_page_number }}">Previous</a></li>
+                                      {% else %}
+                                      <li class="page-item disabled "><a class="page-link" href="#">Previous</a></li>
+                                      {% endif %}
+                                      
+                                      {% if blocks.has_next %}
+                                       <li class="page-item "><a class="page-link" href="?block_page={{ blocks.next_page_number }}">Next</a></li>
+                                       {% else %}
+                                       <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                       {% endif %}
+                                    </ul>
+                                    {% endif %}
+                                  </nav> -->
+
+                                <!-- end table-responsive-->
+                                            <!-- block delet -->
+                                <div class="modal fade" id="block_del">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="top: 155px;">
+
+                                            <!-- Modal Header -->
+                                            <form id="delet_users">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Block</h4>
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Are you sure you want to Delete this Block ?
+                                                </div>
+
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                                                    <button type="submit" class="btn btn-danger" id="b_l"
+                                                        data-dismiss="modal">Delete</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>  <!-- end block delet -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end card-body -->
+                </div>
+
+            </div><!-- end BLOCKS  col -->
+        </div>
+        <div class="row">
+            <!-- Allocated States details-->
+            <div class="col-xl-7">
+                <div class="card">
+                    <div class="card-body">
+                       
+                        <h4 class="header-title mb-3"> Allocated States details</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-nowrap table-centered mb-0" id="state_user_table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>State Name</th>
+                                        <th>State User Name</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div> <!-- end table-responsive-->
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- End Allocated States details-->
+            <!-- end col-->
+            <!-- ####state Delete### -->
+            <div class="modal fade" id="Allocated_States_delete">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="top: 155px;">
+
+                        <!-- Modal Header -->
+                        <form id="delet_users">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Delete User</h4>
+                                <button type="button" class="close"
+                                    data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                Are you sure you want to Delete this state ?
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger"
+                                    data-dismiss="modal">Cancel</button>
+                                <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                                <button type="submit" class="btn btn-danger" id="state_allo"
+                                    data-dismiss="modal">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="myModal_allocate">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="top: 155px;">
+            
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">state re-allocate Form</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+            
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form id="state_allocated_update">
+
+
+                                <!-- <div class="row mb-3">
+                                    <label class="col-md-3 col-form-label" for="password">
+                                        Select State</label>
+                                    <div class="col-md-9">
+                                        <select id="f_allocate_state" class="form-control"
+                                            name="f_allocate_state"></select>
+                                    </div>
+                                </div> -->
+                                
+                                <div class="row mb-3">
+            
+                                    <label class="col-md-3 col-form-label" for="first_name">State Name :</label>
+                                    <div class="col-md-9">
+            
+                                        <input type="text" class="form-control" id="f_allocate_state" name="first_name"
+                                            placeholder="Enter the First Name" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-3 col-form-label" for="password">
+                                        Select State user</label>
+                                    <div class="col-md-9">
+                                        <select id="f_allocate_user" class="form-control"
+                                            name="state_user"></select>
+                                    </div>
+                                </div>
+                                <!-- <div class="row mb-3">
+            
+                                    <label class="col-md-3 col-form-label" for="phone_number">State User :</label>
+                                    <div class="col-md-9">
+            
+                                        <input type="text" class="form-control" id="f_allocate_user" name="phone_number"
+                                            placeholder="Enter the Phone Number">
+                                    </div>
+                                </div> -->
+                                <button type="submit" onclick="submit" class="btn btn-primary"> Update Users</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+
+
+
+            <div class="modal fade" id="myModal_allocate_block">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="top: 155px;">
+            
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Block re-allocate Form</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+            
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form id="block_allocated_update">
+
+                                <div class="row mb-3">
+            
+                                    <label class="col-md-3 col-form-label" for="first_name">Block Name :</label>
+                                    <div class="col-md-9">
+            
+                                        <input type="text" class="form-control" id="f_allocate_block" name="first_name"
+                                            placeholder="Enter the First Name" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-3 col-form-label" for="password">
+                                        Select Block User</label>
+                                    <div class="col-md-9">
+                                        <select id="f_allocate_user_b" class="form-control"
+                                            name="block_user"></select>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" onclick="submit" class="btn btn-primary"> Update Users</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+    <!-- All Blocks-->
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <h4 class="header-title mb-3">Block Allocated</h4>
+
+                        <div class="table-responsive">
+                            <table id="block_user_table" class="table table-striped table-nowrap table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Block Name</th>
+                                        <th>Block User Name</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    
+                                </tbody>
+                            </table>
+
+                            <!-- <a href="/Student_enrollment_system/user_auth/templates/temp/see_all_users.html">See
+                                All Users</a> -->
+                        </div> <!-- end table-responsive-->
+
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- End All Blocks-->
+
+             <!-- All Mentor-->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <h4 class="header-title mb-3">All Mentor</h4>
+
+                        <div class="table-responsive">
+                            <table  id="Mentor_data" class="table table-striped table-nowrap table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Mentor Name</th>
+                                        <th>Phone Number </th>
+                                        <th>State</th>
+                                        <th>District</th>
+                                        <th>Block</th>
+                                        <th>Village</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- <a href="/Student_enrollment_system/user_auth/templates/temp/see_all_users.html">See
+                                All Users</a> -->
+                        </div> <!-- end table-responsive-->
+
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- End All Mentor-->
+
+            <!-- end col-->
+        </div>
+
+    </div> <!-- container -->
+
+</div> <!-- content -->
+
+<!-- The block DELETE Modal-->
+<div class="modal fade" id="block_del">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this Block ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"
+                        data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="b_l"
+                        data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div> <!-- End The block DELETE Modal-->
+
+<!-- The Mentor DELETE Modal -->
+<div class="modal fade" id="Mentor_delete">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this Mentor ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="Mentor_del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div> <!-- End The Mentor DELETE Modal -->
+
+<!-- Mentor edit Models Pop Up-->
+<div class="modal fade" id="Mentor_edit">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Mentor Edit Form</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="mentor_update">
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="Mentor_name">Mentor Name :</label>
+                        <div class="col-md-9">
+
+                            <input type="text" class="form-control" id="name" name="Mentor_name"
+                                placeholder="Enter the First Name">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                        <div class="col-md-9">
+                          <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                        </div>
+                      </div>
+
+                    <!-- <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="phone_number">Phone Number :</label>
+                        <div class="col-md-9">
+
+                            <input type="number" class="form-control" id="fphone_number" name="phone_number"
+                                placeholder="Enter the Phone Number">
+                        </div>
+                    </div> -->
+
+                    <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="state">State :</label>
+                        <div class="col-md-9">
+                          <select id="State_e" class="form-control" onchange="myState()" name='state'>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="district">District :</label>
+                        <div class="col-md-9">
+                          <select id="district_e" class="form-control" onchange="myDistrict()" name='district'>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="block">Block :</label>
+                        <div class="col-md-9">
+                          <select id="Block" onchange="myblock()" class="form-control" name='block'>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="village">Village :</label>
+                        <div class="col-md-9">
+                          <select id="village_e" class="form-control" name='village'>                    
+                          </select>
+                        </div>
+                      </div>
+
+
+
+                    <!-- <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="Mstate_name">State :</label>
+                        <div class="col-md-9">
+                            <select id="State_e" class="form-control" onchange="myState()" name='Mstate_name'>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="Block_name">Block :</label>
+                        <div class="col-md-9">
+                            <select id="Block" class="form-control" onchange="myDistrict()" name="Block_name"></select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="village_name">Village :</label>
+                        <div class="col-md-9">
+                            <select id="village_e" class="form-control" name="village_name"></select>
+                        </div>
+                    </div> -->
+                    <button type="submit" onclick="submit" class="btn btn-primary"> Update </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Mentor edit Models Pop Up-->
+
+<!-- Models all user edit Pop Up-->
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">User Edit Form</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="user_update">
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="first_name">First Name :</label>
+                        <div class="col-md-9">
+
+                            <input type="text" class="form-control" id="f_user_name" name="first_name"
+                                placeholder="Enter the First Name">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                        <div class="col-md-9">
+                          <input type="tel" class="form-control" id="f_phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                        </div>
+                      </div>
+                    <!-- <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="phone_number">Phone Number :</label>
+                        <div class="col-md-9">
+
+                            <input type="number" class="form-control" id="f_phone_number" name="phone_number"
+                                placeholder="Enter the Phone Number">
+                        </div>
+                    </div> -->
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="phone_number">Password :</label>
+                        <div class="col-md-9">
+
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Enter the password">
+                        </div>
+                    </div>
+                    <button type="submit" onclick="submit" class="btn btn-primary"> Update Users</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>  <!-- End Models all user edit Pop Up-->
+
+<!-- The user DELETE Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this User ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div> <!--End The user DELETE Modal -->
+
+<!-- The user block allo DELETE Modal -->
+<div class="modal fade" id="myprogramModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Program</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this Program ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="program_del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div> <!--End The user DELETE Modal -->
+
+<!-- Footer Start -->
+{% include 'Student_template/footer.html' %}
+{% block extra_js%}
+
+<!-- state allo -->
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+    var table = $('#block_user_table').DataTable({
+        "ajax": {
+            url: "{% url 'block_allocation_list' %}",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            dataSrc: function (res) {
+                return res;
+            }
+        },
+        "columns": [
+            { "data": "block.id" },
+            { "data": "block.name" },
+            { "data": "user.username" },
+            // {
+            //     "data": null,
+            //     // "render": function (data, type, row) {
+            //         // var html = '<a href="#" onclick="FetchStateallocatatedblock(\'' + row.id + '\')" data-toggle="modal" data-target="#myModal_allocate_block"><i class="fas fa-edit"></i></a>';
+            //         // return html;
+            //     }
+            // }
+        ]
+    });
+});
+
+
+    // state delete
+
+    function deletestateallocated(itemId) {
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/allocated_state_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+            error: function () {
+                console.log("Error deleting item");
+            }
+        });
+
+        $('#a_s_u').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/allocated_state_update/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+                error: function () {
+                    console.log("Error deleting item");
+                }
+            });
+        });
+
+    }
+
+</script>
+
+<!-- api state allocated with get, post, patch -->
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+        var dataTable = $('#state_user_table').DataTable({
+            "paging": true, // Enable pagination
+        "pageLength": 10, // Set the number of rows per page
+        "searching": true, // Enable searching
+        "ordering": true, // Enable sorting
+        "order": [[ 0, "asc" ]], // Set the default sorting order
+        
+        "ajax":{
+             url:"http://127.0.0.1:8000/state_allocate_list/",
+            "type": "GET",
+            "headers": {
+                "Authorization": "token " + getToken()
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "state_name.name" },
+			{ "data": "state_user.username" },
+            // {
+            //     "data": null,
+            //     "render": function (data, type, row) {
+            //         return `<a href="#" onclick="FetchStateallocatated(${row.id});" data-toggle="modal" data-target="#myModal_allocate"><i class="fas fa-edit"></i></a>`;
+            //     }
+            // }
+        ]
+    });
+});
+
+    // state delete
+
+    function deletestateallo(itemId) {
+
+        $.ajax({
+
+            url: "http://127.0.0.1:8000/allocated_state_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#state_allo').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/allocated_state_update/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+            });
+        });
+    }
+
+</script>
+
+<script>
+
+</script>
+
+
+
+<!--  state api with get, post, patch -->
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+        var dataTable = $('#state_name').DataTable({
+            "paging": true, // Enable pagination
+        "pageLength": 10, // Set the number of rows per page
+        "searching": true, // Enable searching
+        "ordering": true, // Enable sorting
+        "order": [[ 0, "asc" ]], // Set the default sorting order
+        
+        "ajax":{
+             url: "http://127.0.0.1:8000/state_create/",
+            "type": "GET",
+            "headers": {
+                "Authorization": "token " + getToken()
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "name" },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<a href="#" onclick="ViewStudent('${row.id}','${row.name}');"><i class="fas fa-eye"></i></a>`;
+                }
+            }
+        ]
+    });
+});
+// <a href="#" onclick="deletestate(${row.id});" data-toggle="modal" data-target="#state_delete" ><i class="fas fa-trash-alt"></i></a>
+    // state delete
+
+    function deletestate(itemId) {
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/State_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+            error: function () {
+                console.log("Error deleting item");
+            }
+        });
+
+        $('#s_l').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/State_update/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+
+            });
+        });
+
+    }
+    // eye view page
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    function ViewStudent(itemId) {
+        window.location.href = '/State_Students_view'
+        localStorage.setItem('x', itemId);
+
+    }
+
+</script>
+
+
+<!-- block  api/function with get, post, patch -->
+<script>
+  // district get 
+  $("document").ready(function () {
+
+$.ajax({
+    url: "http://127.0.0.1:8000/create_district/",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+        }
+        $("#district_e").html(options)
+    }
+})
+})
+
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+        var dataTable = $('#blockname').DataTable({
+            "paging": true, // Enable pagination
+        "pageLength": 10, // Set the number of rows per page
+        "searching": true, // Enable searching
+        "ordering": true, // Enable sorting
+        "order": [[ 0, "asc" ]], // Set the default sorting order
+        
+        "ajax":{
+            "url": "http://127.0.0.1:8000/block_create/",
+            "type": "GET",
+            "headers": {
+                "Authorization": "token " + getToken()
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "name" },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<a href="#" onclick="deleteblock(${row.id});" data-toggle="modal" data-target="#block_del" ><i class="fas fa-trash-alt"></i></a>
+                            <a href="#" onclick="ViewblockStudent('${row.id}','${row.name}');"><i class="fas fa-eye"></i></a>`;
+                }
+            }
+        ]
+    });
+});
+    // Block delete
+
+    function deleteblock(itemId) {
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+
+        });
+
+        $('#b_l').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/block_update/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+
+            });
+        });
+
+    }
+
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    function ViewblockStudent(itemId,Itemname) {
+        window.location.href = '/block_student_view'
+        localStorage.setItem('x', itemId);
+        localStorage.setItem('block_name', Itemname);
+
+    }
+
+
+</script>
+
+<!-- users  api/function with get, post, patch -->
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        var dataTable = $('#user_table').DataTable({
+            "paging": true, // Enable pagination
+        "pageLength": 10, // Set the number of rows per page
+        "searching": true, // Enable searching
+        "ordering": true, // Enable sorting
+        "order": [[ 0, "asc" ]], // Set the default sorting order
+        
+        "ajax":{
+             url: "http://127.0.0.1:8000/All_users/",
+            "type": "GET",
+            "headers": {
+                "Authorization": "token " + getToken()
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "username" },
+			{ "data": "first_name" },
+			{ "data": "phone_number" },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<a href="#" onclick="FetchUserDetails(${row.id});" data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit"></i></a></i></a>
+					<a href="#" onclick="deleteUSER(${row.id});" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a>`;
+                }
+            }
+        ]
+    });
+});
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+  
+    function FetchUserDetails(itemId) {
+
+        // alert(itemId);
+        // alert(obj);
+        // $(this).data("id");
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+                // Remove item from the HTML table
+                var fname = data.first_name;
+                console.log(fname)
+                var phone_number = data.phone_number;
+                console.log("******", phone_number)
+
+
+                document.getElementById("f_user_name").value = fname;
+                document.getElementById("f_phone_number").value = phone_number;
+
+            },
+
+        });
+
+        $("document").ready(function () {
+            $("#user_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var phone_number = $("#f_phone_number").val();
+
+                console.log("%%%%", phone_number)
+
+                var first_name = $("#f_user_name").val();
+
+                console.log(first_name);
+                var password= $("#password").val();
+                console.log(password)
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "phone_number": phone_number, "first_name": first_name ,"password":password}),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+    //  delete users 
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function deleteUSER(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+            });
+        });
+    }
+
+</script>
+
+<!-- Mentor  api/function with get, post, patch -->
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+    $.ajax({
+        url: "http://127.0.0.1:8000/Mentor_get/",
+        type: "GET",
+        contentType: "application/json",
+        headers: { "Authorization": `token ${getToken()}` },
+        success: function (res) {
+            var table = $("#Mentor_data").DataTable({
+                data: res,
+                columns: [
+                    { data: "id" },
+                    { data: "name" },
+                    { data: "phone_number" },
+                    { data: "State" },
+                    { data: "district" },
+                    { data: "Block" },
+                    { data: "village" },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `
+                                <a href="#" onclick="Mentorfetchedit(${data.id});"  data-toggle="modal" data-target="#Mentor_edit"><i class="fas fa-edit"></i></a> | 
+                                <a href="#" onclick="Mentordelete(${data.id});" data-toggle="modal" data-target="#Mentor_delete"><i class="fas fa-trash-alt"></i></a>
+                            `;
+                        },
+                    },
+                ],
+            });
+        },
+    });
+});
+
+
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function Mentorfetchedit(itemId) {
+
+        $("document").ready(function () {
+    //edit in droupdown get vilage data 
+            $.ajax({
+                url: "http://127.0.0.1:8000/village_create/",
+                type: "GET",
+                contentType: "application/json",
+                headers: {
+                    'Authorization': `token ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                success: function (res) {
+                    // console.log(res)
+                    var options = "";
+                    for (item of res) {
+                        // console.log(item)
+                        options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                    }
+                    $("#village_e").html(options)
+                }
+            })
+
+    //edit in droupdown get state data
+            $.ajax({
+                url: "http://127.0.0.1:8000/state_create/",
+                type: "GET",
+                contentType: "application/json",
+                headers: {
+                    'Authorization': `token ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                success: function (res) {
+                    console.log(res)
+                    var options = "";
+                    for (item of res) {
+                        console.log(item)
+                        options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                    }
+                    console.log(options)
+                    $("#State_e").html(options)
+                }
+            })
+        })
+
+    //edit in droupdown get block data
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_create/",
+            type: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': `token ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
+            success: function (res) {
+                console.log(res)
+                var options = "";
+                for (item of res) {
+                    console.log(item)
+                    options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                }
+                console.log(options)
+                $("#Block").html(options)
+            }
+        })
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                // console.log(data)
+                var name = data.name;
+                // console.log(name)
+                var phone_number = data.phone_number;
+                // console.log(phone_number)
+                var state = data.state.name;
+                // console.log("$$$",state_name)
+                var Block_name = data.block.name;
+                //  console.log("@@@@@",Block_name)
+                var village_name = data.village.name;
+                // console.log(village_name)
+
+                document.getElementById("name").value = name;
+                document.getElementById("fphone_number").value = phone_number;
+                document.getElementById("State").value = state;
+                document.getElementById("Block").value = Block_name;
+                document.getElementById("village_e").value = village_name;
+
+            },
+
+        });
+
+        $("document").ready(function () {
+            $("#mentor_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var phone_number = $("#fphone_number").val();
+                var name = $("#name").val();
+                var state = $("#State_e").val();
+                var block = $("#Block").val();
+                var village = $("#village_e").val();
+
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "phone_number": phone_number, "name": name, "state": state, "block": block, "village": village }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+
+    //   delete
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function Mentordelete(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+            },
+        });
+                  
+        $('#Mentor_del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+            });
+        });
+    }
+
+</script>
+<script>
+
+    function getToken() {
+                    // This function should return the user token dynamically
+                    return (localStorage.getItem('token'));
+                }
+        function myState(){
+                    var x = document.getElementById("State_e").value
+                    console.log("%%&&***",x)
+                    localStorage.setItem('state_id',x)
+                    $("document").ready(function () {
+        $.ajax({
+        url: "http://127.0.0.1:8000/state/"+x+"/district/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#district_e").html(options)
+        }
+    })
+    })
+    
+}
+
+
+function myDistrict(){
+                    var district_x = document.getElementById("district_e").value
+                    console.log("%%&&***",district_x)
+                    localStorage.setItem('district_id',district_x)
+                    $("document").ready(function () {
+        $.ajax({
+        url: "http://127.0.0.1:8000/district/"+district_x+"/block/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#Block").html(options)
+        }
+    })
+    })
+    
+}
+
+function myblock(){
+  var y = document.getElementById("Block").value
+  // localStorage.setItem('block_id',y)
+  console.log("block id",y)
+                   
+$("document").ready(function() {
+        $.ajax({
+        url: "http://127.0.0.1:8000/block/"+y+"/villages/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#village_e").html(options)
+        }
+    })
+    })
+    
+                }
+    
+    </script>
+
+
+
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    
+    function FetchStateallocatated(itemId) {
+
+        // alert(itemId);
+        // alert(obj);
+        // $(this).data("id");
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/allocated_state_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+                // Remove item from the HTML table
+                
+                var s_name = data.state_name.name;
+                console.log("******", s_name)
+                // var u_name = data.state_user.username;
+                // console.log(u_name)
+
+
+                document.getElementById("f_allocate_state").value = s_name;
+                // document.getElementById("f_allocate_user").value = u_name;
+
+            },
+
+        });
+
+        $("document").ready(function () {
+            $("#state_allocated_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var u_name = $("#f_allocate_user").val();
+
+                console.log("%%%%", u_name)
+
+                // var first_name = $("#f_user_name").val();
+
+                // console.log(first_name);
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/allocated_state_update/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "state_user": u_name }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+
+    $("document").ready(function () {
+
+$.ajax({
+    url: "{% url 'state_user_get' %}",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.username}  </option>`
+        }
+        $("#f_allocate_user").html(options)
+    }
+})
+})
+
+// $("document").ready(function () {
+
+// $.ajax({
+//     url: "http://127.0.0.1:8000/state_create/",
+//     type: "GET",
+//     contentType: "application/json",
+//     headers: {
+//         'Authorization': `token ${getToken()}`,
+//         'Content-Type': 'application/json'
+//     },
+//     success: function (res) {
+//         console.log(res)
+//         var options = "";
+//         for (item of res) {
+//             console.log(item)
+//             options = options + `<option value="${item.id}"> ${item.name}  </option>`
+//         }
+//         $("#f_allocate_state").html(options)
+//     }
+// })
+// })
+
+
+
+
+</script>
+
+
+
+<script>
+
+function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    
+    function FetchStateallocatatedblock(itemId) {
+
+        // alert(itemId);
+        // alert(obj);
+        // $(this).data("id");
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+                // Remove item from the HTML table
+                
+                var s_name = data.block.name;
+                console.log("******", s_name)
+                // var u_name = data.state_user.username;
+                // console.log(u_name)
+
+
+                document.getElementById("f_allocate_block").value = s_name;
+                // document.getElementById("f_allocate_user").value = u_name;
+
+            },
+
+        });
+
+        $("document").ready(function () {
+            $("#block_allocated_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var u_name = $("#f_allocate_user_b").val();
+
+                console.log("%%%%", u_name)
+
+                // var first_name = $("#f_user_name").val();
+
+                // console.log(first_name);
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/block_allocation_update/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "user": u_name }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+
+    $("document").ready(function () {
+
+$.ajax({
+    url: "{% url 'block_user_get' %}",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.username}  </option>`
+        }
+        $("#f_allocate_user_b").html(options)
+    }
+})
+})
+
+</script>
+<script>
+    function getToken() {
+    // This function should return the user token dynamically
+    return (localStorage.getItem('token'));
+}
+
+
+$("document").ready(function () {
+    var table = $('#program_table').DataTable({
+        "ajax": {
+            url: "{% url 'create_program' %}",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            dataSrc: function (res) {
+                return res;
+            }
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "program_name" },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    var html = '<a href="#" onclick="ViewprogramStudent(\'' + row.id + '\', \'' + row.program_name + '\')"><i class="fas fa-eye"></i></a>';
+                    html += ' <a href="#" onclick="blockdeleteItem(\'' + row.id + '\')" data-bs-toggle="modal" data-bs-target="#myprogramModal"><i class="fas fa-trash-alt"></i></a>';
+                    return html;
+                }
+            }
+        ]
+    });
+});
+
+
+// <a href="javascript:;"data-toggle="reload" onclick="FetchblockDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#block_edit"><i class="fas fa-edit"></i></a>
+
+// eye view page
+function getToken() {
+    // This function should return the user token dynamically
+    return (localStorage.getItem('token'));
+}
+
+// function ViewblockStudent(itemId) {
+//     window.location.href = '/block_student_view'
+//     localStorage.setItem('x', itemId);
+//     localStorage.setItem('y', itemblockname);
+
+// }
+
+function ViewprogramStudent(itemId , Itemname) {
+    window.location.href = '/program_student_view';
+    localStorage.setItem('x', itemId);
+localStorage.setItem('program_name', Itemname);
+
+
+}
+</script>
+<script>
+        function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function blockdeleteItem(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/program/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#program_del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/program/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+            });
+        });
+    
+
+
+
+}
+</script>
+
+{% endblock extra_js %}
+
+{% endblock %}

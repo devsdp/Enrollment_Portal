@@ -1,0 +1,178 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">State Create</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <!-- <h4 class="header-title mb-3">state create</h4> -->
+
+                            <form method="post" id="state">
+                                <div id="basicwizard">
+                                    <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                                        <li class="nav-item">
+                                            <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab"
+                                                class="nav-link">
+
+                                                <span class="d-none d-sm-inline">Create</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content b-0 mb-0">
+                                        <div class="tab-pane" id="basictab1">
+                                            <div class="row">
+                                                <div class="col-12">
+
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="name"> Select an
+                                                            state:</label>
+                                                        <div class="col-md-9">
+                                                            <select id="name" class="form-control" name='name'>
+                                                                <option value="None">None</option>
+                                                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                                <option value="Arunachal Pradesh">Arunachal Pradesh
+                                                                </option>
+                                                                <option value="Assam">Assam</option>
+                                                                <option value="Bihar">Bihar</option>
+                                                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                                                <option value="Goa">Goa</option>
+                                                                <option value="Gujarat">Gujarat</option>
+                                                                <option value="Haryana">Haryana</option>
+                                                                <option value="Himachal Pradesh">Himachal Pradesh
+                                                                </option>
+                                                                <option value="Jharkhand">Jharkhand</option>
+                                                                <option value="Karnataka">Karnataka</option>
+                                                                <option value="Kerala">Kerala</option>
+                                                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                                                <option value="Maharashtra">Maharashtra</option>
+                                                                <option value="Manipur">Manipur</option>
+                                                                <option value="Meghalaya">Meghalaya</option>
+                                                                <option value="Mizoram">Mizoram</option>
+                                                                <option value="Nagaland">Nagaland</option>
+                                                                <option value="Odisha">Odisha</option>
+                                                                <option value="Punjab">Punjab</option>
+                                                                <option value="Rajasthan">Rajasthan</option>
+                                                                <option value="Sikkim">Sikkim</option>
+                                                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                                                <option value="Telangana">Telangana</option>
+                                                                <option value="Tripura">Tripura</option>
+                                                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                                <option value="Uttarakhand">Uttarakhand</option>
+                                                                <option value="West Bengal">West Bengal</option>
+                                                                <option value="Andaman and Nicobar Islands">Andaman and
+                                                                    Nicobar Islands</option>
+                                                                <option value="Chandigarh">Chandigarh</option>
+                                                                <option
+                                                                    value="Dadra and Nagar Haveli and Daman and Diu">
+                                                                    Dadra and Nagar Haveli and Daman and Diu</option>
+                                                                <option value="Delhi">Delhi</option>
+                                                                <option value="Lakshadweep">Lakshadweep</option>
+                                                                <option value="Puducherry">Puducherry</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="row mb-3">
+                                                                <label class="col-md-3 col-form-label"
+                                                                    for="userName">Block Name</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" class="form-control" id="name"
+                                                                        name="Name" placeholder="Enter the Block name">
+                                                                </div>
+                                                            </div> -->
+
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <ul class="pager wizard mb-0 list-inline text-end mt-2">
+                                                <li class="next list-inline-item">
+                                                    <input type="submit" class="btn btn-success">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- end tab pane -->
+
+
+                                        <!-- end tab pane -->
+
+
+                                    </div> <!-- tab-content -->
+                                </div> <!-- end #basicwizard-->
+                            </form>
+
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        {% include 'Student_template/footer.html' %}
+
+        {% block extra_js%}
+        <script type="text/javascript">
+            function getToken() {
+                // This function should return the user token dynamically
+                return (localStorage.getItem('token'));
+            }
+
+            $("document").ready(function () {
+                $("#state").submit(function (e) {
+                    e.preventDefault();
+                    var name = $("#name").val();
+                    console.log(name);
+                    $.ajax({
+                        url: "http://127.0.0.1:8000/state_create/",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ "name": name }),
+                        headers: {
+                            'Authorization': `token ${getToken()}`,
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (data) {
+                            console.log(data);
+
+                            localStorage.getItem('token', data.token)
+                            console.log(localStorage.getItem('token'))
+                            window.location.href = "/home";
+                        },
+
+                        error: function () {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'State already created',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+
+                });
+            });
+
+        </script>
+
+        {% endblock extra_js%}
+        {% endblock %}

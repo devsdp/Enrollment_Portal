@@ -1,0 +1,229 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+</head>
+
+
+    <div class="content-page">
+      <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+          <!-- start page title -->
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box">
+                <h4 class="page-title">Create State User</h4>
+    
+              </div>
+            </div>
+          </div>
+          <!-- end page title -->
+
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="card">
+                <div class="card-body">
+
+                  <!-- <h4 class="header-title mb-3">Create User</h4> -->
+
+                  <form method="post" id="usercreate">
+                    <div id="basicwizard">
+
+
+
+                      <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                        <li class="nav-item">
+                          <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab" class="nav-link">
+                            <!-- <span class="number">1</span> -->
+                            <span class="d-none d-sm-inline">Create State User</span>
+                          </a>
+                        </li>
+
+                      </ul>
+
+
+                      <div class="tab-content b-0 mb-0">
+                        <div class="tab-pane" id="basictab1">
+                          <div class="row">
+                            <div class="col-12">
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="firstname">First Name :</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control" id="first_name" name="first_name"
+                                    placeholder="Enter the Firstname">
+                                </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="password">
+                                    Select State</label>
+                                <div class="col-md-9">
+                                    <select id="state" class="form-control"
+                                        name="state"></select>
+                                </div>
+                            </div>
+
+                          
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                                  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                                </div>
+                              </div>
+                                   
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                               <input type="number" class="form-control" id="phone_number" name="phone_number"placeholder="Enter the Phone Number">
+                                </div>
+                              </div> -->
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="email">Email :</label>
+                                <div class="col-md-9">
+                                  <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Enter the Email">
+                                </div>
+                              </div>
+
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="password">Password :</label>
+                                <div class="col-md-9">
+                                  <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Enter the password">
+                                </div>
+                              </div>
+
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="password">User Type :</label>
+                                <div class="col-md-9">
+                                  <select id="user_type" class="form-control" name='user_type'>
+                                    <option value=1>Admin</option>
+                                    <option value=2>State user</option>
+                                    <option value=3>Block user</option>
+                                  </select>
+                                </div>
+                              </div> -->
+
+                             
+
+                            </div> <!-- end col -->
+                          </div> <!-- end row -->
+
+                          <ul class="pager wizard mb-0 list-inline text-end mt-2">
+                            <li class="next list-inline-item">
+                              <input type="submit" class="btn btn-success">
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- end tab pane -->
+
+
+                        <!-- end tab pane -->
+
+
+                      </div> <!-- tab-content -->
+                    </div> <!-- end #basicwizard-->
+                  </form>
+
+                </div> <!-- end card-body -->
+              </div> <!-- end card-->
+            </div> <!-- end col -->
+
+            <!-- end row -->
+
+          </div> <!-- container -->
+
+        </div> <!-- content -->
+
+
+        {% include 'Student_template/footer.html' %}
+
+        {% block extra_js%}
+    <script type="text/javascript">
+      function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+      }
+      $("document").ready(function () {
+        $("#usercreate").submit(function (e) {
+          e.preventDefault();
+        
+          var firstname = $("#first_name").val();
+          console.log(firstname);
+          var state = $("#state").val();
+          console.log(state);
+          var PhoneNumber = $("#phone_number").val();
+          console.log(PhoneNumber);
+          var email = $("#email").val();
+          console.log(email);
+          var password = $("#password").val();
+          console.log(password);
+          // var user_type = $("#user_type").val();
+          // console.log(user_type);
+
+
+          $.ajax({
+            url: "http://127.0.0.1:8000/user_create/",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ "first_name": firstname , "state": state, "phone_number": PhoneNumber, "email": email, "password": password }),
+            headers: {
+              'Authorization': `token ${getToken()}`,
+              'Content-Type': 'application/json'
+            },
+            success: function (data) {
+              console.log(data);
+              localStorage.getItem('token', data.token)
+              console.log(localStorage.getItem('token'))
+              window.location.href = "/home";
+            },
+            error: function () {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Please check your user',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+}
+          });
+
+        });
+      });
+    </script>
+    <script>
+                 $("document").ready(function () {
+
+$.ajax({
+    url: "http://127.0.0.1:8000/state_create/",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+        }
+        $("#state").html(options)
+    }
+})
+})
+    </script>
+      
+{% endblock extra_js%}
+{% endblock %} 

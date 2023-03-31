@@ -1,0 +1,116 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">Block Create</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-widgets">
+                            
+                                        <!-- <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#fileupload"><i class="fas fa-file-upload"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload"><i class="fas fa-file-csv"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#Group"><i class="fas fa-plus"></i></a> -->
+                            
+                                    </div>
+                                    <h4 class="header-title mb-0">Group </h4>
+                            
+                                    <div id="cardCollpase5" class="collapse pt-3 show">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Enrollment ID</th>
+                                                        <th>Group Name</th>
+                                                        <th>Student Name</th>
+                                                        <!-- <th>Action</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="group_table">
+                            
+                            
+                                                   <tr>
+
+                                                   </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table responsive-->
+                                    </div> <!-- collapsed end -->
+                                </div><!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+
+                        <!-- end row -->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                {% include 'Student_template/footer.html' %}
+
+                {% block extra_js%}
+       
+
+    <script>
+                                                            function getToken() {
+                                                                // This function should return the user token dynamically
+                                                                return (localStorage.getItem('token'));
+                                                            }
+                                                            
+                                                            var x = localStorage.getItem('x');
+                                                            console.log(x)
+                            
+                                                            $("document").ready(function () {
+                                                                $.ajax({
+                                                                    url: "http://127.0.0.1:8000/students/group/"+x+"/",
+                                                                    type: "GET",
+                                                                    contentType: "application/json",
+                                                                    headers: { "Authorization": `token ${getToken()}` },
+                                                                    success: function (res) {
+                                                                        console.log(res);
+                                                                        var tbody = "";
+                                                                        for (item of res) {
+                                                                            tbody = tbody + `<tr>`;
+                                                                            tbody = tbody + `<td>${item.enrollment_id}</td>`;
+                                                                            tbody = tbody + `<td>${item.group_id.group_name}</td>`;
+                                                                            tbody = tbody + `<td>${item.first_name}</td>`;
+                                                                            // tbody = tbody + `  <td>
+                                                                            //     <a href="javascript:;" data-toggle="reload" onclick="FetchUserDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#StudentModaledit"><i class="fas fa-edit"></i></a>
+                                                                            //     <a href="#" onclick="deleteItem(${item.id});"><i class="fas fa-trash-alt"></i></a>
+                                                                        
+                                                                            //         </td>`;
+                            
+                                                                            tbody = tbody + `</tr>`;
+                                                                            console.log(item);
+                                                                        }
+                                                                        $("#group_table").html(tbody);
+                                                                    }
+                                                                });
+                                                            });
+                            
+                            
+                            
+                                                  
+</script>
+{% endblock extra_js%}
+{% endblock %} 

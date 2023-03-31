@@ -1,0 +1,122 @@
+
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">Students present in the state</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-widgets">
+                            
+                                        <!-- <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#fileupload"><i class="fas fa-file-upload"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload"><i class="fas fa-file-csv"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#Group"><i class="fas fa-plus"></i></a> -->
+                            
+                                    </div>
+                                    <h4 class="header-title mb-0">Students </h4>
+                            
+                                    <div id="cardCollpase5" class="collapse pt-3 show">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered mb-0" id="students_table">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Enrollment ID</th>
+                                                    <th>Student Name</th>
+                                                    <th>Program Name</th>
+                                                    <th>Group Name</th>
+                                                    <th>Gender</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Mentor Name</th>
+                                                    <th>Village Name</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                            
+                                                </tbody>
+                                              </table>
+                                        </div> <!-- end table responsive-->
+                                    </div> <!-- collapsed end -->
+                                </div><!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+
+                        <!-- end row -->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                {% include 'Student_template/footer.html' %}
+
+                {% block extra_js%}
+       
+
+    <script>
+        function getToken() {
+            // This function should return the user token dynamically
+            return (localStorage.getItem('token'));
+        }
+        
+        var x = localStorage.getItem('x');
+        console.log(x)
+        var y = localStorage.getItem('y');
+        console.log(y)
+
+        $("document").ready(function () {
+            $.ajax({
+                url: "http://127.0.0.1:8000/states/"+x+"/students/",
+                type: "GET",
+                contentType: "application/json",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (res) {
+                    console.log(res);
+                    var table = $('#students_table').DataTable({
+      data: res,
+      columns: [
+        { data: 'enrollment_id' },
+        { data: 'first_name' },
+        { data: 'program_id.program_name' },
+        { data: 'group_id.group_name' },
+        { data: 'gender' },
+        { data: 'phone_number' },
+        { data: 'mentor_name.name' },
+        { data: 'village_id.name' }
+      ],
+      pageLength: 10, // Number of rows to display per page
+      lengthMenu: [10, 25, 50, 100], // Dropdown to select the number of rows to display per page
+      searching: true // Enable searching
+    });
+  }
+});
+$('#students_table').DataTable().destroy();
+
+});
+                            
+                            
+                            
+                                                  
+</script>
+{% endblock extra_js%}
+{% endblock %} 
+

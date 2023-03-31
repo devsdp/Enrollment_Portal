@@ -1,0 +1,179 @@
+<!-- <h1>Block Student View</h1> -->
+
+
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                    <h4 class="page-title">Student Present Under the Program</h4> <h4 class="page-title" id="program_name"></h4>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-widgets">
+                            
+                                        <!-- <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#fileupload"><i class="fas fa-file-upload"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload"><i class="fas fa-file-csv"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#Group"><i class="fas fa-plus"></i></a> -->
+                            
+                                    </div>
+                                    <h4 class="header-title mb-0">Students </h4>
+                                    <a href="javascript:;" onclick="downloadExcel()" ><i class="fas fa-file-csv"></i></a>
+                            
+                                    <div id="cardCollpase5" class="collapse pt-3 show">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Enrollment ID</th>
+                                                        <th>Student Name</th>
+                                                        <th>Program Name</th>
+                                                        <th>Group Name</th>
+                                                        <th>Gender</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Mentor Name</th>
+                                                        <th>Village Name</th>
+                                                        <!-- <th>Action</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="students_table">
+                            
+                            
+                                                   <tr>
+
+                                                   </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table responsive-->
+                                    </div> <!-- collapsed end -->
+                                </div><!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+
+                        <!-- end row -->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                {% include 'Student_template/footer.html' %}
+
+                {% block extra_js%}
+       
+
+    <script>
+                                                            function getToken() {
+                                                                // This function should return the user token dynamically
+                                                                return (localStorage.getItem('token'));
+                                                            }
+                                                            
+                                                            var x = localStorage.getItem('x');
+                                                            console.log(x)
+                                                            var program_name = localStorage.getItem('program_name');
+                                                            console.log(program_name)
+                                                            document.getElementById("program_name").innerHTML = program_name;
+                            
+                                                            $("document").ready(function () {
+                                                                $.ajax({
+                                                                    url: "http://127.0.0.1:8000/program/"+x+"/students/",
+                                                                    type: "GET",
+                                                                    contentType: "application/json",
+                                                                    headers: { "Authorization": `token ${getToken()}` },
+                                                                    success: function (res) {
+                                                                        console.log(res);
+                                                                        var tbody = "";
+                                                                        for (item of res) {
+                                                                            tbody = tbody + `<tr>`;
+                                                                            tbody = tbody + `<td>${item.enrollment_id}</td>`;
+                                                                            tbody = tbody + `<td>${item.first_name}</td>`;
+                                                                            tbody = tbody + `<td>${item.program_id.program_name}</td>`;
+                                                                            tbody = tbody + `<td>${item.group_id.group_name}</td>`;
+                                                                            tbody = tbody + `<td>${item.gender}</td>`;
+                                                                            tbody = tbody + `<td>${item.phone_number}</td>`;
+                                                                            tbody = tbody + `<td>${item.mentor_name.name}</td>`;
+                                                                            tbody = tbody + `<td>${item.village_id.name}</td>`;
+                                                                            // tbody = tbody + `  <td>
+                                                                            //     <a href="javascript:;" data-toggle="reload" onclick="FetchUserDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#StudentModaledit"><i class="fas fa-edit"></i></a>
+                                                                            //     <a href="#" onclick="deleteItem(${item.id});"><i class="fas fa-trash-alt"></i></a>
+                                                                        
+                                                                            //         </td>`;
+                            
+                                                                            tbody = tbody + `</tr>`;
+                                                                            console.log(item);
+                                                                        }
+                                                                        $("#students_table").html(tbody);
+                                                                    }
+                                                                });
+                                                            });
+                            
+                            
+                            
+                                                  
+</script>
+
+<script>
+    function getToken() {
+            // This function should return the user token dynamically
+            return (localStorage.getItem('token'));
+        }
+        function downloadExcel() {
+        fetch('http://127.0.0.1:8000/Studen_get_program/?program_id='+x, {
+            headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `token ${getToken()}`
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+          const filteredData = data.map(item => {
+            const { id, created_by, created_at, updated_at, file_id, ...rest } = item;
+            return rest;
+          });
+          const csv = [
+            Object.keys(filteredData[0]).join(','),
+            ...filteredData.map(item => Object.values(item).join(','))
+          ].join('\n');
+    
+          // Create a data URI for the CSV string
+          const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    
+          // Create an anchor element for the download link
+          const link = document.createElement('a');
+          link.href = uri;
+          link.download = 'my_data.csv';
+    
+          // Trigger a click event on the anchor element to download the file
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+    
+    </script>
+{% endblock extra_js%}
+{% endblock %} 
+

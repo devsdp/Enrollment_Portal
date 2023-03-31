@@ -1,0 +1,752 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+      
+<!-- jQuery library file -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js">
+</script>
+
+ <!-- Datatable plugin JS library file -->
+
+</script>
+<!-- <script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.js" type="text/javascript"></script> -->
+
+{% block content %}
+
+<style>
+ .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #dd1212;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 2px;
+  bottom: 2px;
+  background-color: rgb(229, 230, 223);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #267407;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #567708;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+ /* Rounded sliders  */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+<style>
+    .column {
+   float: left;
+   padding: 10px;
+   height: 110px; /* Should be removed. Only for demonstration */
+ }
+ 
+ .left, .right {
+   width: 15%;
+ }
+ 
+ .middle {
+   width: 20%;
+ }
+ 
+ /* Clear floats after the columns */
+ .row:after {
+   content: "";
+   display: table;
+   clear: both;
+ }
+  </style>
+
+<div class="content-page">
+    <div class="content">
+
+
+<div class="row">   
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="dropdown float-end">
+                <!-- <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                aria-expanded="false"> -->
+                <!-- <i class="mdi mdi-dots-vertical"></i> -->
+                </a>
+                
+            </div>
+            <h4 class="header-title mb-3"> All Inactive Students</h4>
+            <!-- <div class=" tablesaw-modeswitch tablesaw-bar-section"><label> -->
+                 <!-- <span class="btn tablesaw-btn btn-select tablesaw-btn-select">  -->
+                    <div class="row1">
+                        <form method="Post" action="/result_students">
+                            {% csrf_token %}
+                            <div class="column left">
+                                <span aria-hidden="true">Search the State</span>
+                                <select id="state" class="form-control" onchange="myState()" name='state'>
+                                </select>
+                            </div>
+                           <div class ="column middle">
+                            <span aria-hidden="true">Search the District</span>
+                            <select id="district" onchange="myDistrict()" class="form-control" name='district'>
+                            </select>
+                           </div>
+                           
+                            <div class="column right">
+                                <span aria-hidden="true">Search the Block</span>
+                                <select id="block" onchange="myblock()" class="form-control" name='block'>                   
+                                </select>
+                            </div>
+                            <div class="column right">
+                                <span aria-hidden="true">Search the Village</span>
+                                <select id="village" class="form-control" name='village'>                   
+                                </select>
+                            </div>
+                            <input type="submit" class="btn btn-info" value="Search" style="position: relative; top: 32px; right: -32px; " >
+                            </form>
+                    </div>
+                    
+                    
+               
+            </span>
+            
+ 
+    </div>
+    <form method="Post" action="/multiple_choice">
+        {% csrf_token %}
+        
+        <select name="selection" aria-placeholder="Please select your option">
+            <option value=""></option>    
+            <option value="Active selected Student">Active selected Student</option>
+            <option value="Delete Selected">Delete Selected</option>
+
+            </select>
+            <button  class="btn btn-info" type="submit">Apply Selection</button>
+       
+
+   
+            
+            <div class="table-responsive">
+                
+                <table id="inActive_stud" class="display table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                           
+                            <th> <input type="checkbox" id="selectAll" value="selectAll">
+                            </th>
+                            
+                            <th>Enrollment ID</th>
+                            <th> Student Name</th>
+                            <th>Phone Number</th>
+                            <th>State</th>
+                            <th>District</th>
+                            <th>Block</th>
+                            <th>Village</th>
+                            <th>Approval</th>
+                            
+                        </tr>
+                    </thead>
+                    <!-- <tbody id="user_table"> -->
+                     <tbody>
+                        {% for stud in inactaive_students %}
+                        <tr>
+                            
+                                <td>
+                                    <center> <input type="checkbox" id='stud_id' name='filetouse' value="{{ stud.enrollment_id }}"></center>
+                                 </td>
+                            </form>
+                            
+                            <td>
+                                {{ stud.enrollment_id }}
+
+                            </td>
+                            <td>
+                                {{ stud.first_name }} {{ stud.last_name }}
+
+                            </td>
+                            <td>
+                                {{ stud.phone_number }}
+
+                            </td>
+                            <td>
+                                {{ stud.village_id.block.district.state.name }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.block.district.name }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.block.name }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.name }}
+                            </td>
+                            <td>
+                                <!-- <a href="#" onclick="FetchUserDetails({{ user.id }});"  data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit"></i></a> | 
+                                <a href="#"  onclick="deleteUSER({{ user.id }});" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a> -->
+                                <form method="post" action="{% url 'student_detail' stud.id %}">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="action" value="toggle_active">
+                                        <label class="switch">
+                                            <input type="checkbox" name="is_active" {% if stud.status %}checked{% endif %} onchange="this.form.submit()">
+                                            <span class="slider round"></span>
+                                        </label>
+
+                                </form>
+                                
+                            </td>
+                          
+                        </tr>
+
+                       
+                        {% endfor %}
+
+                     </tbody>
+                     
+                </table>
+            </form>
+
+               
+
+                        <script>  
+                            / Initialization of datatable /
+                            $(document).ready(function() {                 
+                                $("#inActive_stud").DataTable();
+                               
+                            
+                            });
+
+                        </script>
+                       
+
+                        <script>
+                            $('#selectAll').click(function() {
+                            if (this.checked) {
+                                $('input[name="filetouse"]').prop('checked', true);
+                            } else {
+                                $('input[name="filetouse"]').prop('checked', false);
+                            }
+                            });
+                        </script>
+
+<!-- <script type="text/javascript">  
+    function selects(){  
+        var ele=document.getElementsByName('filetouse');  
+        for(var i=0; i<ele.length; i++){  
+            if(ele[i].type=='checkbox')  
+                ele[i].checked=true;  
+        } 
+        li_selectall_deselect = document.getElementById("deselect");
+        li_selectall_deselect.classList.remove("hide")  
+    }  
+    function deSelect(){  
+        var ele=document.getElementsByName('filetouse');  
+        for(var i=0; i<ele.length; i++){  
+            if(ele[i].type=='checkbox')  
+                ele[i].checked=false;  
+              
+        }  
+        li_selectall_select = document.getElementById("select");
+        li_selectall_select.classList.remove("hide")
+    }             
+</script>  -->
+
+
+
+            </div> <!-- end table-responsive-->
+
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div>
+</div>
+
+<div class="row">
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="dropdown float-end">
+                <!-- <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                aria-expanded="false"> -->
+                
+            </div>
+            <h4 class="header-title mb-3"> All Active Students</h4>
+            
+             <!-- <select id="get_data_page" class="pagination-example" onchange="myFunction()">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=25>25</option>
+                    <option value=50>50</option>
+                    <option value=100>100</option> 
+                </select> -->
+            </span>
+        </label>
+    </div>
+
+    <!-- "inactaive_students" : students_data_inactive,
+    "active_students": students_data_active -->
+
+            <div class="table-responsive">
+                
+                <table id="Active_stud" class="display table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Enrollment ID</th>
+                            <th> Student Name</th>
+                            <th>Phone Number</th>
+                            <th>State</th>
+                            <th>District</th>
+                            <th>Block</th>
+                            <th>Village</th>
+                            <th>Approval</th>
+                            
+                        </tr>
+                    </thead>
+                    <!-- <tbody id="user_table"> -->
+                     <tbody>
+                        {% for stud in active_students %}
+                        <tr>
+                            <td>
+                                {{ stud.enrollment_id }}
+
+                            </td>
+                            <td>
+                                {{ stud.first_name }} {{ stud.last_name }}
+
+                            </td>
+                            <td>
+                                {{ stud.phone_number }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.block.district.state.name }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.block.district.name }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.block.name }}
+                            </td>
+                            <td>
+                                {{ stud.village_id.name }}
+                            </td>
+                            <td>
+                                <!-- <a href="#" onclick="FetchUserDetails({{ user.id }});"  data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit"></i></a> | 
+                                <a href="#"  onclick="deleteUSER({{ user.id }});" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a> -->
+                                <form method="post" action="{% url 'student_detail' stud.id %}">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="action" value="toggle_inactive">
+                                        <label class="switch">
+                                            <input type="checkbox" name="is_active" {% if stud.status %}checked{% endif %} onchange="this.form.submit()">
+                                            <span class="slider round"></span>
+                                        </label>
+
+                                </form>
+                            </td>
+                          
+                        </tr>
+                       
+                        {% endfor %}
+
+                     </tbody>
+                </table>
+
+                        <script>  
+                            / Initialization of datatable /
+                            $(document).ready(function() {                 
+                                $("#Active_stud").DataTable();
+                            });
+                        </script>
+
+
+            </div> <!-- end table-responsive-->
+
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div>
+
+</div>
+
+<!-- Models all user  Pop Up-->
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Form</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="user_update">
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="first_name">First Name :</label>
+                        <div class="col-md-9">
+
+                            <input type="text" class="form-control" id="f_user_name" name="first_name"
+                                placeholder="Enter the First Name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="phone_number">Phone Number :-</label>
+                        <div class="col-md-9">
+
+                            <input type="number" class="form-control" id="f_phone_number" name="phone_number"
+                                placeholder="Enter the Phone Number">
+                        </div>
+                    </div>
+                    <button type="submit" onclick="submit" class="btn btn-primary"> Update Users</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+        </div>
+    </div>
+</div> 
+
+<!-- The user DELETE Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this User ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% include 'Student_template/footer.html' %}
+{% block extra_js%}
+
+
+
+
+
+
+
+
+
+<script>
+
+    function getToken() {
+                    // This function should return the user token dynamically
+                    return (localStorage.getItem('token'));
+                }
+                function myState(){
+                          var x = document.getElementById("state").value
+                          console.log("%%&&***",x)
+                          localStorage.setItem('state_id',x)
+                          $("document").ready(function () {
+              $.ajax({
+              url: "http://127.0.0.1:8000/state/"+x+"/district/",
+              type: "GET",
+              contentType: "application/json",
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                  console.log(res)
+                  var options = "";
+                  for (item of res) {
+                      console.log(item)
+                      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                  }
+                  $("#district").html(options)
+              }
+          })
+          })
+          
+      }
+
+
+      function myDistrict(){
+                          var district_x = document.getElementById("district").value
+                          console.log("%%&&***",district_x)
+                          localStorage.setItem('district_id',district_x)
+                          $("document").ready(function () {
+              $.ajax({
+              url: "http://127.0.0.1:8000/district/"+district_x+"/block/",
+              type: "GET",
+              contentType: "application/json",
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                  console.log(res)
+                  var options = "";
+                  for (item of res) {
+                      console.log(item)
+                      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                  }
+                  $("#block").html(options)
+              }
+          })
+          })
+          
+      }
+
+    function myblock(){
+        var y = document.getElementById("block").value
+        console.log("block id",y)
+                         
+      $("document").ready(function() {
+              $.ajax({
+              url: "http://127.0.0.1:8000/block/"+y+"/villages/",
+              type: "GET",
+              contentType: "application/json",
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                  console.log(res)
+                  var options = "";
+                  for (item of res) {
+                      console.log(item)
+                      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                  }
+                  $("#village").html(options)
+              }
+          })
+          })
+          
+                      }
+          
+          </script>
+<script>
+    // state get 
+    $("document").ready(function () {
+
+$.ajax({
+    url: "http://127.0.0.1:8000/state_create/",
+    type: "GET",
+    contentType: "application/json",
+    headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+    },
+    success: function (res) {
+        console.log(res)
+        var options = "";
+        for (item of res) {
+            console.log(item)
+            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+        }
+        $("#state").html(options)
+    }
+})
+})
+</script>
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+                                
+        $.ajax({
+            url: "http://127.0.0.1:8000/All_users/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                console.log(res);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.id}</td>`;
+                    tbody = tbody + `<td>${item.username}</td>`;
+                    tbody = tbody + `<td>${item.first_name}</td>`;
+                    tbody = tbody + `  <td>
+                                                <a href="#" onclick="FetchUserDetails(${item.id});"  data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit"></i></a> | 
+                                                <a href="#"  onclick="deleteUSER(${item.id});" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a>
+                                                </td>`;
+                    tbody = tbody + `</tr>`;
+
+                    console.log(item);
+
+                }
+                $("#user_table").html(tbody);
+            }
+        });   
+    });
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function FetchUserDetails(itemId) {
+
+        // alert(itemId);
+        // alert(obj);
+        // $(this).data("id");
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var fname = data.first_name;
+                console.log(fname)
+                var phone_number = data.phone_number;
+
+
+                document.getElementById("f_user_name").value = fname;
+                document.getElementById("f_phone_number").value = phone_number;
+
+            },
+          
+        });
+
+        $("document").ready(function () {
+            $("#user_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var phone_number = $("#f_phone_number").val();
+
+                var first_name = $("#f_user_name").val();
+
+                console.log(first_name);
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "phone_number": phone_number, "first_name": first_name }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });FetchUserDetails
+            })
+        });
+    }
+
+//  delete users 
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function deleteUSER(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },             
+            });
+        });
+    }
+
+</script>
+
+
+{% endblock extra_js %}
+
+{% endblock %}

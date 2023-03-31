@@ -1,0 +1,1991 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+{% block title %} Block Dashboard {% endblock title %}
+{% block content %}
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>  
+</head>
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">Welcome !</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Block</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <div class="row">
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-widgets">
+                                        <a href="{% static 'assets/excel_template/Bulk Data Upload.xlsx' %}"><i class="ri-file-excel-2-line"></i></a>
+                                        &nbsp;&nbsp;
+
+                                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#fileupload"><i class="fas fa-file-upload"></i></a>
+                                        &nbsp;&nbsp;
+                                        <!-- <a href="javascript:;" data-toggle="reload" ><i class="fas fa-file-csv"></i></a> -->
+                                        <!-- <a href="javascript:;" id="download-button" data-toggle="reload" ><i class="fas fa-file-csv"></i></a> -->
+                                        <a href="javascript:;" onclick="downloadExcel()" ><i class="fas fa-file-csv"></i></a>
+
+
+                                        &nbsp;&nbsp;
+                                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#studentModal"><i class="fas fa-plus"></i></a>
+
+                                    </div>
+                                    <h4 class="header-title mb-0">Students Present inside the current Block</h4>
+
+                                    <div id="cardCollpase5" class="collapse pt-3 show">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Enrollment ID</th>
+                                                        <th>Student Name</th>
+                                                        <th>Group Name</th>
+                                                        <th>Program</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="student_table">
+
+
+                                                    
+
+
+                                                        <script>
+                                                            function getToken() {
+                                                                // This function should return the user token dynamically
+                                                                return (localStorage.getItem('token'));
+                                                            }
+
+
+                                                            $("document").ready(function () {
+                                                                $.ajax({
+                                                                    url: "http://127.0.0.1:8000/block_datas/",
+                                                                    type: "GET",
+                                                                    contentType: "application/json",
+                                                                    headers: { "Authorization": `token ${getToken()}` },
+                                                                    success: function (res) {
+                                                                        console.log(res);
+                                                                        var tbody = "";
+                                                                        for (item of res) {
+                                                                  
+                                                                            tbody = tbody + `<tr>`;
+                                                                            tbody = tbody + `<td>${item.enrollment_id}</td>`;
+                                                                            tbody = tbody + `<td>${item.first_name}</td>`;
+                                                                            tbody = tbody + `<td>${item.group_id.group_name}</td>`;
+                                                                            tbody = tbody + `<td>${item.program_id.program_name}</td>`;
+                                                                            tbody = tbody + `  <td>
+                                                                                <a href="javascript:;" data-toggle="reload" onclick="FetchUserDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#StudentModaledit"><i class="fas fa-edit"></i></a>
+                                                                                <a href="javascript:;" data-toggle="reload" onclick="deleteUSER(${item.id});" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-trash-alt"></i></a>
+                                                                        
+                                                                                    </td>`;
+
+                                                                            tbody = tbody + `</tr>`;
+                                                                            // console.log(item);
+                                                                        }
+                                                                        $("#student_table").html(tbody);
+                                                                    }
+                                                                });
+                                                            });
+
+
+
+
+                                                            
+
+                                                                                // <a href="#"  onclick="deleteUSER(${item.id});" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a>
+
+
+
+                                                        </script>
+
+                                                    
+
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table responsive-->
+                                    </div> <!-- collapsed end -->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+
+             
+                
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-widgets">
+                                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"><i class="fas fa-plus"></i></a>
+
+                                    </div>
+
+                                    <h4 class="header-title mb-0">All Groups</h4>
+
+                                    <div id="cardCollpase5" class="collapse pt-3 show">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered mb-0" id="all_group">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Group ID</th>
+                                                        <th>Group Name</th>
+                                                        <th>Created By</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table responsive-->
+                                    </div> <!-- collapsed end -->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                    
+
+
+
+
+                    <div class="modal fade" id="fileupload" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Bulk Add student</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" enctype="multipart/form-data" id="file_upload">
+                                        
+                                        <div class="fallback">
+                                            <input name="file" id="file" type="file" multiple />
+                                        </div>
+
+                                        <div class="dz-message needsclick">
+                                            <i class="h1 text-muted ri-upload-cloud-2-line"></i>
+                                            <h3>Add files here or click to upload.</h3>
+
+                                        </div>
+                                        <button  type="submit" id="file_uploads" class="btn btn-primary">Add Students</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">create Group</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" method="POST" id="create_group">
+                                        <div class="mb-2">
+                                            <label for="exampleInputEmail1" class="form-label">Enter the name of the
+                                                Group</label>
+                                            <input type="text" class="form-control" id="name_group">
+                                               
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Create Group</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="modal fade" id="StudentModaledit" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Student</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form" id="studentedit">
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="first_name">First Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="s_first_name" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="first_name">Last Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="s_last_name" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="gender">Gender</label>
+                                            <div class="col-md-9">
+                                                <select id="s_gender" class="form-control" name='gender'>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="mentor_name_s">
+                                                Mentor Name</label>
+                                            <div class="col-md-9">
+                                                <select id="mentor_name_s" class="form-control" name="mentor_name"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                            <div class="col-md-9">
+                                              <input type="tel" class="form-control" id="s_phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                                            </div>
+                                          </div>
+
+                                        <!-- <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="s_phone_number">Phone
+                                                Number</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="s_phone_number" class="form-control" value="">
+                                            </div>
+                                        </div> -->
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="password">
+                                                Program</label>
+                                            <div class="col-md-9">
+                                                <select id="program_id" class="form-control" name="program_id"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="village_id">
+                                                village</label>
+                                            <div class="col-md-9">
+                                                <select id="village_id" class="form-control" name="village_id"></select>
+                                            </div>
+                                        </div>
+
+
+                                      
+                                        <button type="submit" onclick="submit" class="btn btn-primary">Update
+                                            Student</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+         <!-- The DELETE Modal -->
+         <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+            <div class="modal-content" style="top: 155px;" >
+            
+                <!-- Modal Header -->
+                <form id="delet_users">
+                <div class="modal-header">
+                <h4 class="modal-title">Delete User</h4>
+                <button type="button" class="close" onclick="hideModal()" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                Are you sure you want to Delete this Student ?
+                </div>
+       
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button> -->
+                <button type="button" class="btn btn-danger" onclick="hideModal()">Cancel</button>
+                <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                <button type="submit" class="btn btn-danger" id="del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+                
+            </div>
+            </div>
+        </div>
+        <script>
+            function hideModal() {
+              $('#myModal').modal('hide');
+            }
+          </script>
+
+
+
+                    <div class="modal fade" id="group_add_student" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Student to Group</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form" id="add_st_group">
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="first_name">Group Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="group_name" class="form-control" value="">
+                                                <input type="hidden" id="group_id" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="st_name">Name</label>
+                                            <div class="col-md-9">
+                                                <select id="st_name" class="form-control" name='st_name'>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" onclick="submit" class="btn btn-primary">Add Student</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+<!-- village get -->
+
+                    <div class="col-xl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-widgets">
+                                    <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"></a>
+
+                                </div>
+
+                                <h4 class="header-title mb-0">All Village</h4>
+
+                                <div id="cardCollpase5" class="collapse pt-3 show">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-centered mb-0" >
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Village Name</th>
+                                                    <!-- <th>Created By</th>
+                                                    <th>Status</th> -->
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="village_get">
+                                                
+
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end table responsive-->
+                                </div> <!-- collapsed end -->
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card-->
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <div class="card-widgets">
+                                            <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                            <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false" aria-controls="cardCollpase5"><i class="mdi mdi-minus"></i></a>
+                                            <a href="javascript:;" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                        </div> -->
+                            <h4 class="header-title mb-0">Programs</h4>
+                            
+
+                            <div id="cardCollpase5" class="collapse pt-3 show">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Program ID</th>
+                                                <th>Program Name</th>
+                                                <!-- <th>Total student</th> -->
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="program_table">
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table responsive-->
+                            </div> <!-- collapsed end -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+
+                    <!-- Modal Student-->
+                    <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Student</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form" id="student">
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="first_name">First Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="first_name" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="last_name">Last Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="last_name" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="gender">Gender</label>
+                                            <div class="col-md-9">
+                                                <select id="gender" class="form-control" name='gender'>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="mentor_name">
+                                                Mentor Name</label>
+                                            <div class="col-md-9">
+                                                <select id="mentor_name" class="form-control" name="mentor_name"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                            <div class="col-md-9">
+                                              <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                                            </div>
+                                          </div>
+
+
+                                        <!-- <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="phone_number">Phone
+                                                Number</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="phone_number" class="form-control" value="">
+                                            </div>
+                                        </div> -->
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="password">
+                                                Program</label>
+                                            <div class="col-md-9">
+                                                <select id="program_id_s" class="form-control" name="program_id"></select>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="state">
+                                                State</label>
+                                            <div class="col-md-9">
+                                                <select id="state" class="form-control" name="state"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="block">
+                                                Block</label>
+                                            <div class="col-md-9">
+                                                <select id="block" class="form-control" name="block"></select>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="village_id">
+                                                village</label>
+                                            <div class="col-md-9">
+                                                <select id="village_id_s" class="form-control" name="village_id"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="group_id">
+                                                Group</label>
+                                            <div class="col-md-9">
+                                                <select id="group_ids" class="form-control" name="group_id"></select>
+                                            </div>
+                                        </div>
+
+<!-- 
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="usersname">User Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="usersname" class="form-control" value="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label" for="email">Email</label>
+                                            <div class="col-md-10">
+                                                <input type="email" id="email" name="email"
+                                                    class="form-control" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label class="col-md-2 col-form-label"
+                                                for="password">Password</label>
+                                            <div class="col-md-10">
+                                                <input type="password" class="form-control" id="password"
+                                                    value="password">
+                                            </div>
+                                        </div> -->
+                                        <button type="submit" onclick="submit" class="btn btn-primary">Create
+                                            Student</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                          function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+
+
+                        $("document").ready(function () {
+                            $("#student").submit(function (e) {
+                                e.preventDefault();
+                                var gender = $("#gender").val();
+                                var mentor_name = $("#mentor_name").val();
+                                var phone_number = $("#phone_number").val();
+                                var program_id = $("#program_id").val();
+                                var group_id = $("#group_ids").val();
+                                // console.log(group_id)
+                                var village_id = $("#village_id_s").val();
+                                // console.log(village_id)
+                              
+                                var first_name = $("#first_name").val();
+                                var last_name = $("#last_name").val();
+
+                                // console.log(name);
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/student_create/",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    data: JSON.stringify({ "last_name":last_name, "group_id": group_id , "gender": gender, "mentor_name":mentor_name, "phone_number":phone_number, "program_id":program_id, "village_id":village_id, "first_name":first_name }),
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (data) {
+                                        // console.log(data);
+                                        localStorage.getItem('token', data.token)
+                                        console.log(localStorage.getItem('token'))
+                                        window.location.href = "/block_dashboard";
+                                    },
+                                    error: function () {
+
+                                      
+                                    }
+                                });
+
+                            });
+                        });
+
+
+                        
+
+                        $("document").ready(function () {
+
+                            $.ajax({
+                                url: "http://127.0.0.1:8000/All_Student/",
+                                type: "GET",
+                                contentType: "application/json",
+                                headers: {
+                                    'Authorization': `token ${getToken()}`,
+                                    'Content-Type': 'application/json'
+                                },
+                                success: function (res) {
+                                    // console.log(res)
+                                    var options = "";
+                                    for (item of res) {
+                                        // console.log(item)
+                                        options = options + `<option value="${item.id}"> ${item.first_name}  </option>`
+                                    }
+                                    $("#st_name").html(options)
+                                }
+                            })
+                        });
+
+                        $("document").ready(function () {
+                            $("#add_st_group").submit(function (e) {
+                                e.preventDefault();
+                                var group_id = $("#group_id").val();
+                                var student_id = $("#st_name").val();
+
+                                // console.log(group_id);
+                                // console.log(student_id);
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/Student_create_group/",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    data: JSON.stringify({ "student_id": student_id, "group_id": group_id}),
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (data) {
+                                        // console.log(data);
+                                        localStorage.getItem('token', data.token)
+                                        console.log(localStorage.getItem('token'))
+                                        window.location.href = "/block_dashboard";
+                                    },
+                                    error: function () {
+
+                                        Swal.fire({
+                                                title: 'Error!',
+                                                text: 'Group name can not be empty',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                                });
+                                    }
+                                });
+
+                            });
+                        });
+                            
+
+
+
+
+                        $("document").ready(function () {
+                            $("#add_st_group").submit(function (e) {
+                                e.preventDefault();
+                                var group_id = $("#group_id").val();
+                                var student_id = $("#st_name").val();
+
+                                // console.log(group_id);
+                                // console.log(student_id);
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/Student_create_group/",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    data: JSON.stringify({ "student_id": student_id, "group_id": group_id}),
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (data) {
+                                        // console.log(data);
+                                        localStorage.getItem('token', data.token)
+                                        console.log(localStorage.getItem('token'))
+                                        window.location.href = "/block_dashboard";
+                                    },
+                                    error: function () {
+
+                                        Swal.fire({
+                                                title: 'Error!',
+                                                text: 'Group name can not be empty',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                                });
+                                    }
+                                });
+
+                            });
+                        });
+                        
+                    </script>
+                    
+
+
+                    
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+
+
+    </div>
+    <!-- end row -->
+
+    </div> <!-- container -->
+
+    </div> <!-- content -->
+
+    <!-- Footer Start -->
+    {% include 'Student_template/footer.html' %}
+    {% block extra_js %}
+
+    <script>
+        function getToken() {
+                                // This function should return the user token dynamically
+                                return (localStorage.getItem('token'));
+                            }
+                            $("document").ready(function () {
+    
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/create_program/",
+                                    type: "GET",
+                                    contentType: "application/json",
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (res) {
+                                        // console.log(res)
+                                        var options = "";
+                                        for (item of res) {
+                                            // console.log(item)
+                                            options = options + `<option value="${item.id}"> ${item.program_name}  </option>`
+                                        }
+                                        $("#program_id_s").html(options)
+                                    }
+                                })
+                            })
+    
+    
+    
+                            function getToken() {
+                                // This function should return the user token dynamically
+                                return (localStorage.getItem('token'));
+                            }
+                            $("document").ready(function () {
+    
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/block_data/",
+                                    type: "GET",
+                                    contentType: "application/json",
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (res) {
+                                        // console.log(res)
+                                        var options = "";
+                                        for (item of res) {
+                                            // console.log(item)
+                                            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                                        }
+                                        $("#village_id_s").html(options)
+                                    }
+                                })
+                            })
+
+
+
+                            function getToken() {
+                                // This function should return the user token dynamically
+                                return (localStorage.getItem('token'));
+                            }
+                            $("document").ready(function () {
+    
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/Group_create_B/",
+                                    type: "GET",
+                                    contentType: "application/json",
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (res) {
+                                        // console.log(res)
+                                        var options = "";
+                                        for (item of res) {
+                                            // console.log(item)
+                                            options = options + `<option value="${item.id}"> ${item.group_name}  </option>`
+                                        }
+                                        $("#group_ids").html(options)
+                                    }
+                                })
+                            })
+
+                            function getToken() {
+                                // This function should return the user token dynamically
+                                return (localStorage.getItem('token'));
+                            }
+                            $("document").ready(function () {
+    
+                                $.ajax({
+                                    url: "http://127.0.0.1:8000/mentor_create/",
+                                    type: "GET",
+                                    contentType: "application/json",
+                                    headers: {
+                                        'Authorization': `token ${getToken()}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    success: function (res) {
+                                        // console.log(res)
+                                        var options = "";
+                                        for (item of res) {
+                                            console.log(item)
+                                            options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                                        }
+                                        $("#mentor_name").html(options)
+                                    }
+                                })
+                            })
+    </script> 
+<script>
+    function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+                        $("document").ready(function () {
+
+                            $.ajax({
+                                url: "http://127.0.0.1:8000/create_program/",
+                                type: "GET",
+                                contentType: "application/json",
+                                headers: {
+                                    'Authorization': `token ${getToken()}`,
+                                    'Content-Type': 'application/json'
+                                },
+                                success: function (res) {
+                                    // console.log(res)
+                                    var options = "";
+                                    for (item of res) {
+                                        // console.log(item)
+                                        options = options + `<option value="${item.id}"> ${item.program_name}  </option>`
+                                    }
+                                    $("#program_id").html(options)
+                                }
+                            })
+                        })
+
+
+
+                        function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+                        $("document").ready(function () {
+
+                            $.ajax({
+                                url: "http://127.0.0.1:8000/village_create/",
+                                type: "GET",
+                                contentType: "application/json",
+                                headers: {
+                                    'Authorization': `token ${getToken()}`,
+                                    'Content-Type': 'application/json'
+                                },
+                                success: function (res) {
+                                    // console.log(res)
+                                    var options = "";
+                                    for (item of res) {
+                                        // console.log(item)
+                                        options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                                    }
+                                    $("#village_id").html(options)
+                                }
+                            })
+                        })
+
+                        function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+                        $("document").ready(function () {
+
+                            $.ajax({
+                                url: "http://127.0.0.1:8000/Mentor_get/",
+                                type: "GET",
+                                contentType: "application/json",
+                                headers: {
+                                    'Authorization': `token ${getToken()}`,
+                                    'Content-Type': 'application/json'
+                                },
+                                success: function (res) {
+                                    // console.log(res)
+                                    var options = "";
+                                    for (item of res) {
+                                        // console.log(item)
+                                        options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                                    }
+                                    $("#mentor_name_s").html(options)
+                                }
+                            })
+                        })
+
+</script> 
+<script>
+        function getToken() {
+          // This function should return the user token dynamically
+          return (localStorage.getItem('token'));
+      }    
+
+
+    //   $("document").ready(function () {
+    //       $("#file_upload").submit(function (e) {
+    //           e.preventDefault();
+    //           var file = $("#file").val();
+          
+            
+
+    //         var formData = new FormData($(this)[0]);
+
+// $("document").ready(function () {
+//     $("#file_upload").submit(function (e) {
+//         e.preventDefault();
+//         var file = $("#file").val();
+    
+//         var formData = new FormData($(this)[0]);
+
+//         $.ajax({
+//             url: "http://127.0.0.1:8000/Bulk_Student_create/",
+//             type: 'POST',
+//             data: formData,
+//             async: false,
+//             headers: {
+//                 'Authorization': `token ${getToken()}`
+//             },
+//             success: function (data) {
+//                 Swal.fire({
+//                     title: 'Success!',
+//                     text: 'Your file has been uploaded successfully',
+//                     icon: 'success',
+//                     confirmButtonText: 'OK'
+//                 }).then((result) => {
+//                     if (result.isConfirmed) {
+//                         window.location.href = "/block_dashboard";
+//                     }
+//                 });
+//             },
+//             error: function (xhr, textStatus, errorThrown) {
+//                 var errorMsg = '';
+
+//                 if (xhr.status === 401) {
+//                     errorMsg = 'Unauthorized access';
+//                 } else if (xhr.status === 404) {
+//                     errorMsg = 'Resource not found';
+//                 } else if (xhr.status === 422) {
+//                     errorMsg = 'Validation error';
+//                 } else {
+//                     errorMsg = 'Error occurred';
+//                 }
+
+//                 if (xhr.responseJSON && xhr.responseJSON.error) {
+//                     errorMsg = xhr.responseJSON.error;
+//                 }
+
+//                 Swal.fire({
+//                     title: 'Error!',
+//                     text: errorMsg,
+//                     icon: 'error',
+//                     confirmButtonText: 'OK'
+//                 });
+//             },
+//             cache: false,
+//             contentType: false,
+//             processData: false
+//         });
+
+//         return false;
+//     });
+// });
+
+
+$("document").ready(function () {
+    $("#file_upload").submit(function (e) {
+        e.preventDefault();
+        var file = $("#file").val();
+    
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Bulk_Student_create/",
+            type: 'POST',
+            data: formData,
+            async: false,
+            headers: {
+                'Authorization': `token ${getToken()}`
+            },
+            success: function (data) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Your file has been uploaded successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/block_dashboard";
+                    }
+                });
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errorMsg = '';
+
+                if (xhr.status === 401) {
+                    errorMsg = 'Unauthorized access';
+                } else if (xhr.status === 404) {
+                    errorMsg = 'Resource not found';
+                } else if (xhr.status === 422) {
+                    errorMsg = 'Validation error';
+                } else {
+                    errorMsg = 'Error occurred';
+                }
+
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+
+                Swal.fire({
+                    title: 'Error!',
+                    text: errorMsg,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+
+        return false;
+    });
+});
+
+
+
+          
+
+//                 error: function () {
+//                     console.log('##########')
+
+// Swal.fire({
+// title: 'Error!',
+// text: 'Please check your group name , village , mentor name ,program , state and block',
+// icon: 'error',
+// confirmButtonText: 'OK'
+// });
+// }
+//             });
+
+//             return false;
+//             });
+
+//           });
+      
+      
+      </script>
+
+
+<!-- create the group -->
+<script>
+    function getToken() {
+      // This function should return the user token dynamically
+      return (localStorage.getItem('token'));
+  }    
+
+
+  $("document").ready(function () {
+      $("#create_group").submit(function (e) {
+          e.preventDefault();
+          var group_name = $("#name_group").val();
+       
+          $.ajax({
+              url: "http://127.0.0.1:8000/Group_create_B/",
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({ "group_name": group_name}),
+              headers: {
+                  'Authorization': `token ${getToken()}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function (data) {
+                //   console.log(data);
+                  localStorage.getItem('token', data.token)
+                  console.log(localStorage.getItem('token'))
+                  window.location.href = "/block_dashboard";   
+              },
+              error: function () {
+
+                  Swal.fire({
+              title: 'Error!',
+              text: 'Group name can not be empty',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+              }
+          });
+
+      });
+  });
+  
+  </script>
+    
+    
+    
+    <!-- <script src="assets/js/app.min.js"></script> -->
+   
+        <script>
+             function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+        function FetchUserDetails(itemId) {
+            // var id = obj.getD
+            alert(itemId);
+            // alert(obj);
+            // $(this).data("id");
+
+            $.ajax({    
+                    url: "http://127.0.0.1:8000/student_update/" + itemId +'/',
+                    method: "GET",
+                    headers: { "Authorization": `token ${getToken()}` },
+                    success: function(data) {
+
+                        // Remove item from the HTML table
+                        var fname = data.first_name ;
+                        var lname = data.last_name ;
+                        console.log(lname)
+                        var phone_number = data.phone_number ;
+                        var gender = data.gender ;
+                        var mentor_name = data.mentor_name ;
+                        var program_id = data.program_id ;
+                        var village_id = data.village_id ;
+                        
+                        
+                        document.getElementById("s_first_name").value = fname;
+                        document.getElementById("s_last_name").value = lname;
+                        document.getElementById("s_phone_number").value = phone_number;
+                        document.getElementById("s_gender").val = gender;
+                        document.getElementById("mentor_name_s").value = mentor_name;
+                        document.getElementById("program_id").value = program_id;
+                        document.getElementById("village_id").value = village_id;
+                        
+                    },
+                    error: function() {
+                        console.log("Error deleting item");
+                    }
+                });
+
+                $("document").ready(function () {
+                            $("#studentedit").submit(function (e) {
+                                e.preventDefault();
+                               
+                                var gender = $("#s_gender").val();
+                                console.log(gender)
+                                var mentor_name = $("#mentor_name_s").val();
+                                console.log(mentor_name)
+                                var phone_number = $("#s_phone_number").val();
+                                console.log(phone_number)
+                                var program_id = $("#program_id").val();
+                                console.log(program_id)
+                                var village_id = $("#village_id").val();
+                                console.log(village_id)
+                        
+                                var first_name = $("#s_first_name").val();
+                                console.log(first_name)
+                                var last_name = $("#s_last_name").val();
+                                console.log(last_name)
+
+                                // console.log(first_name);
+                $.ajax({
+                    url: "http://127.0.0.1:8000/student_update/"+ itemId +"/",
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "gender": gender,"last_name":last_name, "mentor_name":mentor_name, "phone_number":phone_number, "program_id":program_id, "village_id":village_id,"first_name":first_name }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        // console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/block_dashboard";
+                    },
+                    error: function () {
+              Swal.fire({
+              title: 'Error!',
+              text: 'Please check your name',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+                    }
+                });
+
+                            
+        })
+    });
+}
+    
+    </script>
+
+
+
+    <script>
+        function getToken() {
+            // This function should return the user token dynamically
+            return (localStorage.getItem('token'));
+        }
+    
+    
+        $("document").ready(function () {
+            $.ajax({
+                url: "http://127.0.0.1:8000/block_data/",
+                type: "GET",
+                contentType: "application/json",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (res) {
+                    // console.log(res);
+                    var tbody = "";
+                    for (item of res) {
+                        tbody = tbody + `<tr>`;
+                        tbody = tbody + `<td>${item.id}</td>`;
+                        tbody = tbody + `<td>${item.name}</td>`;
+                        // tbody = tbody + `<td>${item.created_by.username}</td>`;
+                        // tbody = tbody + `<td>${item.status}</td>`;
+                        tbody = tbody + `  <td>
+                            
+                            
+                            <a href="#" onclick="ViewStudent('${item.id}','${item.name}');"><i class="fas fa-eye"></i></a>
+                                </td>`;
+    
+                        tbody = tbody + `</tr>`;
+                        // console.log(item);
+                    }
+                    $("#village_get").html(tbody);
+                }
+                // <a href="#" onclick="ViewStudent(${item.id});"><i class="fas fa-eye"></i></a>
+                // <a href="javascript:;" data-toggle="reload" onclick="FetchgroupDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#group_add_student"><i class="fas fa-edit"></i></a>
+                //             <a href="#" onclick="deleteGroup(${item.id});"><i class="fas fa-trash-alt"></i></a>
+            });
+        });
+        // eye view page
+        function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    function ViewStudent(itemId,Itemname) {
+        window.location.href = '/village_student_view'
+        localStorage.setItem('x', itemId);
+        localStorage.setItem('village_name', Itemname);
+
+    }
+
+    
+    
+    </script>
+
+
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $.ajax({
+            url: "http://127.0.0.1:8000/Group_create_B/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                // console.log(res);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.id}</td>`;
+                    tbody = tbody + `<td>${item.group_name}</td>`;
+                    tbody = tbody + `<td>${item.created_by.username}</td>`;
+                    tbody = tbody + `<td>${item.status}</td>`;
+                    tbody = tbody + `  <td>
+                        <a href="javascript:;" data-toggle="reload" onclick="FetchgroupDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#group_add_student"><i class="fas fa-edit"></i></a>
+                        <a href="#" onclick="deleteGroup(${item.id});"><i class="fas fa-trash-alt"></i></a>
+                        <a  onclick="ViewGroup(${item.id});"><i class="fas fa-eye"></i></a>
+                            </td>`;
+
+                    tbody = tbody + `</tr>`;
+                    // console.log(item);
+                }
+                $("#all_group").html(tbody);
+            }
+        });
+    });
+
+
+
+</script>
+
+
+<script>
+    function getToken() {
+                   // This function should return the user token dynamically
+                   return (localStorage.getItem('token'));
+               }
+function FetchgroupDetails(itemId) {
+   // var id = obj.getD
+   // alert(itemId);
+   // alert(obj);
+   // $(this).data("id");
+
+   $.ajax({    
+           url: "http://127.0.0.1:8000/Group_get/" + itemId +'/',
+           method: "GET",
+           headers: { "Authorization": `token ${getToken()}` },
+           success: function(data) {
+
+               // Remove item from the HTML table
+               var gname = data.group_name ;
+               var g_id = data.id
+            //    console.log(gname)
+               document.getElementById("group_name").value = gname;
+               document.getElementById("group_id").value= g_id;
+           },
+           error: function() {
+               console.log("Error deleting item");
+           }
+       });
+
+
+
+
+
+    }
+
+
+
+
+</script>
+
+<script>
+         function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+
+        function deleteGroup(itemId) {
+            $.ajax({    
+                    url: "http://127.0.0.1:8000/Group_get/" + itemId +'/',
+                    method: "DELETE",
+                    headers: { "Authorization": `token ${getToken()}` },
+                    success: function(data) {
+
+                        window.location.reload();
+ 
+                       
+                    },
+                    error: function() {
+                        console.log("Error deleting item");
+                    }
+                });
+        }
+    </script>
+
+<script>
+    function getToken() {
+                       // This function should return the user token dynamically
+                       return (localStorage.getItem('token'));
+                   }
+
+   function ViewGroup(itemId) {
+        window.location.href='/group_view'
+        localStorage.setItem('x', itemId);
+
+   }
+//        $.ajax({    
+//                url: "http://127.0.0.1:8000/Group_get/" + itemId +'/',
+//                method: "DELETE",
+//                headers: { "Authorization": `token ${getToken()}` },
+//                success: function(data) {
+
+//                    window.location.reload();
+
+                  
+//                },
+//                error: function() {
+//                    console.log("Error deleting item");
+//                }
+//            });
+//    }
+</script>
+
+<script>
+    function getToken() {
+                   // This function should return the user token dynamically
+                   return (localStorage.getItem('token'));
+               }
+function deleteUSER(itemId) {
+   
+//    alert(itemId);
+   // alert(obj);
+   // $(this).data("id");
+
+   $.ajax({    
+           url: "http://127.0.0.1:8000/student_update/" + itemId +'/',
+           method: "GET",
+           headers: { "Authorization": `token ${getToken()}` },
+           success: function(data) {
+
+               // Remove item from the HTML table
+               var userid = data.id ;
+               console.log(userid)
+ 
+               
+           },
+       });
+       $('#del').click(function() {
+      // Send an AJAX request to delete the user
+      $.ajax({    
+         url: "http://127.0.0.1:8000/student_update/" + itemId +'/',
+         method: "DELETE",
+         headers: { "Authorization": `token ${getToken()}` },
+         success: function(data) {
+            // Reload the page after successful deletion
+            window.location.reload();
+         },
+      });
+   });
+//        $('#del').click(function() {
+//       // Send an AJAX request to delete the user
+//       $.ajax({    
+//          url: "http://127.0.0.1:8000/student_update/" + itemId +'/',
+//          method: "DELETE",
+//          headers: { "Authorization": `token ${getToken()}` },
+//          success: function(data) {
+//             // Reload the page after successful deletion
+//             window.location.reload();
+//          },
+//          error: function() {
+//             console.log("Error deleting item");
+//          }
+//       });
+//    });
+}</script>
+
+
+    <script>
+        function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+
+                        
+                        
+
+      
+    </script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script> -->
+    
+
+
+    <script>
+        function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+
+
+                        // const downloadButton = document.getElementById('download-button'); -->
+
+// downloadButton.addEventListener('click', async () => {
+//   try {
+//     const response = await fetch('http://127.0.0.1:8000/get_student/', {
+//       headers: {
+//         'Content-Type': 'application/json',
+//         "Authorization": `token ${getToken()}`
+//         // Add any authentication headers or tokens as necessary
+//       },
+//     });
+//     const data = await response.json();
+
+//     // Create a new workbook
+//     const wb = XLSX.utils.book_new();
+
+//     // Convert the data to an array of arrays
+//     const rows = data.map(student => [student.name, student.age, student.grade]);
+
+//     // Add the rows to a new worksheet
+//     const ws = XLSX.utils.aoa_to_sheet(rows);
+//     XLSX.utils.book_append_sheet(wb, ws, 'Students');
+
+//     // Get the current date and format it as a string
+//     const dateStr = new Date().toISOString().slice(0, 10);
+
+//     // Generate a filename for the downloaded file
+//     const filename = `my_data_${dateStr}.xlsx`;
+
+//     // Write the workbook to a file and download it
+//     XLSX.writeFile(wb, filename);
+
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }); -->
+
+
+// const downloadButton = document.getElementById('download-button');
+
+// downloadButton.addEventListener('click', async () => {
+//   try {
+//     const response = await fetch('http://127.0.0.1:8000/get_student/', {
+//         headers: { "Authorization": `token ${getToken()}`,
+//         "Content-Type": `application/json` },
+        
+
+//     });
+//     console.log(response.data)
+//     const blob = await response.blob();
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+
+//     // Get the current date and format it as a string
+//     const dateStr = new Date().toISOString().slice(0, 10);
+
+//     // Include the date in the filename
+//     a.download = `my_data_${dateStr}.xlsx`;
+
+//     a.click();
+//     URL.revokeObjectURL(url);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
+
+// function get_csv(){
+
+//     $.ajax({    
+//            url: 'http://127.0.0.1:8000/get_student/',
+//            method: "GET",
+//            headers: { "Authorization": `token ${getToken()}` },
+//            success: function(data) {
+
+//             console.log(data)
+//             var fileName = "";
+// 		  var columnNames = [];
+// 		  var records = [];
+// 		  var responseExcel = "";
+// 		  var jsObject = JSON.parse(data);
+
+// 			for (var key in jsObject) {
+// 				fileName = key + ".csv";
+// 				if (jsObject.hasOwnProperty(key)) {
+// 					for (var key2 in jsObject[key]) {
+// 						columnNames.push(key2);
+// 						if (jsObject[key].hasOwnProperty(key2)) {
+// 							records.push(jsObject[key][key2]);
+// 						}
+// 					}
+// 				}
+// 			}
+			
+// 			responseExcel = columnNames.join(";") + "\n";
+// 			responseExcel += records.join(";");
+			
+// 			var blob = new Blob([responseExcel], {type: "text/plain"});
+// 			var url  = URL.createObjectURL(blob);
+
+// 			var a = document.createElement('a');
+// 			a.href        = url;
+// 			a.download    = fileName;
+// 			a.textContent = "Download " + fileName;
+
+// 			document.getElementById('json').appendChild(a);
+		
+
+//             //    // Remove item from the HTML table
+//             //    var gname = data.group_name ;
+//             //    var g_id = data.id
+//             // //    console.log(gname)
+//             //    document.getElementById("group_name").value = gname;
+//             //    document.getElementById("group_id").value= g_id;
+//            },
+//            error: function() {
+//                console.log("Error deleting item");
+//            }
+//        });
+
+
+// }
+    
+// Define a function to download the Excel file
+// function downloadExcel() {
+//   $.ajax({
+//     url: 'http://127.0.0.1:8000/get_student/',
+//     method: 'GET',
+//     headers: {
+//         'Content-Type': 'application/json',
+//         "Authorization": `token ${getToken()}`
+//         // Add any authentication headers or tokens as necessary
+//       },
+//     success: function(data) {
+//       // Create a temporary <a> element with the URL returned by the API
+//       var downloadUrl = URL.createObjectURL(data);
+//       var a = document.createElement('a');
+//       a.href = downloadUrl;
+//       a.download = 'my_data.xlsx';
+//       document.body.appendChild(a);
+//       a.click();
+//       // Remove the temporary <a> element
+//       document.body.removeChild(a);
+//       // Release the memory used by the URL object
+//       URL.revokeObjectURL(downloadUrl);
+//     },
+//     error: function(xhr, status, error) {
+//       console.error(error);
+//     },
+//   });
+// }
+
+// // Add a click event listener to the download button
+// $('#download-button').click(function() {
+//   downloadExcel();
+// });
+
+
+
+function getToken() {
+                            // This function should return the user token dynamically
+                            return (localStorage.getItem('token'));
+                        }
+
+                        const downloadBtn = document.querySelector('#download-button');
+// downloadBtn.addEventListener('click', async () => {
+//   const token = getToken();
+
+//   // Make a GET request to the API endpoint to download the Excel file
+//   const res = await fetch('http://127.0.0.1:8000/get_student/', {
+//     headers: {
+//         'Content-Type': 'application/json',
+//         "Authorization": `token ${getToken()}`
+// //         // Add any authentication headers or tokens as necessary
+//       },
+//   });
+//   const blob = await res.blob();
+
+//   // Create a temporary URL for the downloaded file
+//   const url = URL.createObjectURL(blob);
+
+//   // Create a new <a> element and set its attributes
+//   const a = document.createElement('a');
+//   a.href = url;
+//   a.download = 'my_data.xlsx';
+
+//   // Programmatically click the <a> element to initiate the download
+//   document.body.appendChild(a);
+//   a.click();
+
+//   // Clean up by removing the temporary URL and <a> element
+//   document.body.removeChild(a);
+//   window.URL.revokeObjectURL(url);
+// });
+
+// function downloadExcel() {
+//     fetch('http://127.0.0.1:8000/get_student/', {
+//         headers: {
+//         'Content-Type': 'application/json',
+//         "Authorization": `token ${getToken()}`
+// // //         // Add any authentication headers or tokens as necessary
+// //       },
+//     }})
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.blob();
+//     })
+//     .then(blob => {
+//         saveAs(blob, 'my_data.xlsx');
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// }
+
+
+// function downloadExcel() {
+//     fetch('http://127.0.0.1:8000/get_student/', {
+//         headers: {
+//         'Content-Type': 'application/json',
+//         "Authorization": `token ${getToken()}`
+// // //         // Add any authentication headers or tokens as necessary
+// //       },
+//     }})
+//     .then(response => response.json())
+//     .then(data => {
+//       const csv = [
+//         Object.keys(data[0]).join(','),
+//         ...data.map(item => Object.values(item).join(','))
+//       ].join('\n');
+
+//       // Create a data URI for the CSV string
+//       const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+//       // Create an anchor element for the download link
+//       const link = document.createElement('a');
+//       link.href = uri;
+//       link.download = 'my_data.csv';
+
+//       // Trigger a click event on the anchor element to download the file
+//       document.body.appendChild(link);
+//       link.click();
+//       document.body.removeChild(link);
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+// }
+
+
+// function downloadExcel() {
+//     fetch('http://127.0.0.1:8000/get_student/', {
+//         headers: {
+//             'Content-Type': 'application/json',
+//             "Authorization": `token ${getToken()}`
+//             // Add any authentication headers or tokens as necessary
+//         },
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         // Exclude the "id" property from the keys and values of each data object
+//         const csv = [
+//             Object.keys(data[0]).filter(key => key !== 'id').join(','),
+//             ...data.map(item => Object.values(item).filter((value, index) => index !== 0).join(',')) // index 0 refers to id
+//         ].join('\n');
+
+//         // Create a data URI for the CSV string
+//         const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+//         // Create an anchor element for the download link
+//         const link = document.createElement('a');
+//         link.href = uri;
+//         link.download = 'my_data.csv';
+
+//         // Trigger a click event on the anchor element to download the file
+//         document.body.appendChild(link);
+//         link.click();
+//         document.body.removeChild(link);
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// }
+
+
+function downloadExcel() {
+    fetch('http://127.0.0.1:8000/get_student/', {
+        headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `token ${getToken()}`
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+      const filteredData = data.map(item => {
+        const { id, created_by, created_at, updated_at, file_id, ...rest } = item;
+        return rest;
+      });
+      const csv = [
+        Object.keys(filteredData[0]).join(','),
+        ...filteredData.map(item => Object.values(item).join(','))
+      ].join('\n');
+
+      // Create a data URI for the CSV string
+      const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+      // Create an anchor element for the download link
+      const link = document.createElement('a');
+      link.href = uri;
+      link.download = 'my_data.csv';
+
+      // Trigger a click event on the anchor element to download the file
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+
+
+
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+
+
+	<!-- <script>
+		// Make API request and retrieve data
+		fetch('https://example.com/api/students', {
+			headers: {
+				Authorization: 'Token YOUR_API_TOKEN_HERE'
+			}
+		})
+			.then(response => response.json())
+			.then(data => {
+				// Loop through data and add to table
+				data.forEach(row => {
+					const newRow = document.createElement('tr');
+
+					const genderCell = document.createElement('td');
+					genderCell.textContent = row.gender;
+					newRow.appendChild(genderCell);
+
+					const firstNameCell = document.createElement('td');
+					firstNameCell.textContent = row.first_name;
+					newRow.appendChild(firstNameCell);
+
+					const lastNameCell = document.createElement('td');
+					lastNameCell.textContent = row.last_name;
+					newRow.appendChild(lastNameCell);
+
+					const phoneNumberCell = document.createElement('td');
+					phoneNumberCell.textContent = row.phone_number;
+					newRow.appendChild(phoneNumberCell);
+
+					const statusCell = document.createElement('td');
+					statusCell.textContent = row.status;
+					newRow.appendChild(statusCell);
+
+					const createdAtCell = document.createElement('td');
+					createdAtCell.textContent = row.created_at;
+					newRow.appendChild(createdAtCell);
+
+					const mentorNameCell = document.createElement('td');
+					mentorNameCell.textContent = row.mentor_name;
+					newRow.appendChild(mentorNameCell);
+
+					const programCell = document.createElement('td');
+					programCell.textContent = row.program;
+					newRow.appendChild(programCell);
+
+					const groupCell = document.createElement('td');
+					groupCell.textContent = row.group;
+					newRow.appendChild(groupCell);
+
+					const villageCell = document.createElement('td');
+					villageCell.textContent = row.village;
+					newRow.appendChild(villageCell);
+
+					const blockCell = document.createElement('td');
+					blockCell.textContent = row.Block;
+					newRow.appendChild(blockCell);
+
+					const stateCell = document.createElement('td');
+					stateCell.textContent = row.State;
+					newRow.appendChild(stateCell);
+
+					document.querySelector('#student-table tbody').appendChild(newRow);
+				});
+			})
+			.catch(error => console.error(error));
+	</script> -->
+
+
+    <script>
+        function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+        $.ajax({
+            url: "http://127.0.0.1:8000/get_allocated_program_block/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                // console.log(res);
+                // localStorage.setItem('y', itemblockname);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.id}</td>`;
+                    tbody = tbody + `<td>${item.program_name}</td>`;
+                    // tbody = tbody + `<td>${item.created_by.username}</td>`;
+                    // localStorage.setItem('y', ${item.block.name});
+                    tbody = tbody + `  <td>
+                        <a href="#" onclick="ViewprogramStudent('${item.id}', '${item.program_name}');"><i class="fas fa-eye"></i></a>
+                        
+                       
+                                        </td>`;
+
+                    tbody = tbody + `</tr>`;
+                    // console.log(item);
+                }
+                $("#program_table").html(tbody);
+            }
+        });
+    });
+    // <a href="javascript:;"data-toggle="reload" onclick="FetchblockDetails(${item.id});" data-bs-toggle="modal" data-bs-target="#block_edit"><i class="fas fa-edit"></i></a>
+                        // <a href="#" onclick="blockdeleteItem(${item.id});"data-bs-toggle="modal" data-bs-target="#myblockModal"><i class="fas fa-trash-alt"></i></a>
+
+    // eye view page
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    // function ViewblockStudent(itemId) {
+    //     window.location.href = '/block_student_view'
+    //     localStorage.setItem('x', itemId);
+    //     localStorage.setItem('y', itemblockname);
+
+    // }
+
+    function ViewprogramStudent(itemId , Itemname) {
+        window.location.href = '/program_student_view';
+        localStorage.setItem('x', itemId);
+    localStorage.setItem('program_name', Itemname);
+    
+
+}
+</script>
+
+{% endblock extra_js%}
+
+{% endblock %}

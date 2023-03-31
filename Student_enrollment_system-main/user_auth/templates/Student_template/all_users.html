@@ -1,0 +1,394 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+      
+<!-- jQuery library file -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js">
+</script>
+
+ <!-- Datatable plugin JS library file -->
+
+</script>
+<!-- <script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.js" type="text/javascript"></script> -->
+
+{% block content %}
+
+<style>
+ 
+</style>
+
+<div class="content-page">
+    <div class="content">
+
+
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="dropdown float-end">
+                <!-- <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                aria-expanded="false"> -->
+                <!-- <i class="mdi mdi-dots-vertical"></i> -->
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                </div>
+            </div>
+            <h4 class="header-title mb-3"> All Users</h4>
+            <div class=" tablesaw-modeswitch tablesaw-bar-section"><label>
+                 <!-- <span class="btn tablesaw-btn btn-select tablesaw-btn-select">  -->
+                    <span aria-hidden="true">Data</span>
+             <!-- <select id="get_data_page" class="pagination-example" onchange="myFunction()">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=25>25</option>
+                    <option value=50>50</option>
+                    <option value=100>100</option> 
+                </select> -->
+            </span>
+        </label>
+    </div>
+
+
+            <div class="table-responsive">
+                <!-- <table id="tableID">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>UserName</th>
+                            <th>First Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user_table">
+                       
+
+                    </tbody>
+ 
+
+                </table> -->
+                <table id="tableID" class="display table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>UserName</th>
+                            <th>First Name</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <!-- <tbody id="user_table"> -->
+                     <tbody>
+                        {% for user in custom_user %}
+                        <tr>
+                            <td>
+                                {{ user.id }}
+
+                            </td>
+                            <td>
+                                {{ user.username }}
+
+                            </td>
+                            <td>
+                                {{ user.first_name }}
+
+                            </td>
+                            <td>
+                                <a href="#" onclick="FetchUserDetails('{{ user.id }}');"  data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit"></i></a> | 
+                                <a href="#"  onclick="deleteUSER('{{ user.id }}');" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                          
+                        </tr>
+                       
+                        {% endfor %}
+
+                     </tbody>
+                </table>
+
+                        <script>  
+                            /* Initialization of datatable */
+                            $(document).ready(function() {                 
+                                $("#tableID").DataTable();
+                            });
+                        </script>
+
+
+            </div> <!-- end table-responsive-->
+
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div>
+
+
+<!-- Models all user  Pop Up-->
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Form</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="user_update">
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="first_name">First Name :</label>
+                        <div class="col-md-9">
+
+                            <input type="text" class="form-control" id="f_user_name" name="first_name"
+                                placeholder="Enter the First Name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <label class="col-md-3 col-form-label" for="phone_number">Phone Number :-</label>
+                        <div class="col-md-9">
+
+                            <input type="number" class="form-control" id="f_phone_number" name="phone_number"
+                                placeholder="Enter the Phone Number">
+                        </div>
+                    </div>
+                    <button type="submit" onclick="submit" class="btn btn-primary"> Update Users</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+        </div>
+    </div>
+</div> 
+
+<!-- The user DELETE Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="top: 155px;">
+
+            <!-- Modal Header -->
+            <form id="delet_users">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to Delete this User ?
+                </div>
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="submit" onclick="submit"  class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+                    <button type="submit" class="btn btn-danger" id="del" data-dismiss="modal">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% include 'Student_template/footer.html' %}
+{% block extra_js%}
+
+
+
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+
+    $("document").ready(function () {
+                                
+        $.ajax({
+            url: "http://127.0.0.1:8000/All_users/",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (res) {
+                console.log(res);
+                var tbody = "";
+                for (item of res) {
+                    tbody = tbody + `<tr>`;
+                    tbody = tbody + `<td>${item.id}</td>`;
+                    tbody = tbody + `<td>${item.username}</td>`;
+                    tbody = tbody + `<td>${item.first_name}</td>`;
+                    tbody = tbody + `  <td>
+                                                <a href="#" onclick="FetchUserDetails(${item.id});"  data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit"></i></a> | 
+                                                <a href="#"  onclick="deleteUSER(${item.id});" data-toggle="modal" data-target="#myModal" ><i class="fas fa-trash-alt"></i></a>
+                                                </td>`;
+                    tbody = tbody + `</tr>`;
+
+                    console.log(item);
+
+                }
+                $("#user_table").html(tbody);
+            }
+        });   
+    });
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function FetchUserDetails(itemId) {
+
+        // alert(itemId);
+        // alert(obj);
+        // $(this).data("id");
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var fname = data.first_name;
+                console.log(fname)
+                var phone_number = data.phone_number;
+
+
+                document.getElementById("f_user_name").value = fname;
+                document.getElementById("f_phone_number").value = phone_number;
+
+            },
+          
+        });
+
+        $("document").ready(function () {
+            $("#user_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var phone_number = $("#f_phone_number").val();
+
+                var first_name = $("#f_user_name").val();
+
+                console.log(first_name);
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "phone_number": phone_number, "first_name": first_name }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });FetchUserDetails
+            })
+        });
+    }
+
+//  delete users 
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function deleteUSER(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+
+
+            },
+        });
+
+        $('#del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/Update_All_users/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },             
+            });
+        });
+    }
+
+</script>
+<!-- <script>
+   
+    
+    $(document).ready(function(){
+    $('#data_user').after('<div id="nav"></div>');
+    
+    // data_no = myFunction()
+    document.getElementById("comboA").onchange = function(evt){
+    var value = evt.target.value;
+
+    var rowsShown = data_page ;
+    console.log("datatatatat",rowsShown)
+    var rowsTotal = $('#data_user tbody tr').length;
+    var numPages = rowsTotal/rowsShown;
+    for(i = 0;i < numPages;i++) {
+        var pageNum = i + 1;
+        $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
+    }
+    $('#data_user tbody tr').hide();
+    $('#data_user tbody tr').slice(0, rowsShown).show();
+    $('#nav a:first').addClass('active');
+    $('#nav a').bind('click', function(){
+
+        $('#nav a').removeClass('active');
+        $(this).addClass('active');
+        var currPage = $(this).attr('rel');
+        var startItem = currPage * rowsShown;
+        var endItem = startItem + rowsShown;
+        $('#data_user tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+        css('display','table-row').animate({opacity:1}, 300);
+    });
+}
+});
+
+</script> -->
+
+<!-- <script>
+  
+    /* Initialization of datatable */
+    $(document).ready(function() {
+        $('#data_user').DataTable({ });
+    });
+</script> -->
+
+{% endblock extra_js %}
+
+{% endblock %}
