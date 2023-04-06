@@ -36,6 +36,127 @@
                                                         <div class="row">
                                                             <div class="col-12">
 
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="pname">Program Name :-</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text"  class="form-control" id="pname" placeholder="Program Name" name="program_name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <label class="col-md-3 col-form-label" for="abb">Program Abbrivation :-</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" class="form-control" id="abb" name="pabb" placeholder="Enter the pabb">
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div> <!-- end col -->
+                                                        </div> <!-- end row -->
+
+                                                        <ul class="pager wizard mb-0 list-inline text-end mt-2">
+                                                            <li class="next list-inline-item">
+                                                                <input type="submit" class="btn btn-success">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- end tab pane -->
+
+                                                  
+                                                    <!-- end tab pane -->
+
+
+                                                </div> <!-- tab-content -->
+                                            </div> <!-- end #basicwizard-->
+                                        </form>
+
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->                
+                {% include 'Student_template/footer.html' %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        function getToken() {
+            // This function should return the user token dynamically
+            return (localStorage.getItem('token'));
+        }
+
+        $("document").ready(function () {
+            $("#program").submit(function (e) {
+                e.preventDefault();
+                var program_name = $("#pname").val();
+                console.log(program_name)
+                var program_abb = $("#abb").val();
+                console.log(program_abb)
+
+                $.ajax({
+                    url: "{% url 'create_program' %}",
+                    type: "POST",
+                    contentType: "application/json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'Token ' + getToken());
+                    },
+                    data: JSON.stringify({
+                        'program_name': program_name,
+                        'program_abb': program_abb,
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    },
+                });
+            });
+        });
+    </script>
+    {% endblock extra_js%}
+          {% endblock %}
+{% comment %} 
+ {% extends 'Student_template/header.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content-page">
+      <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+          <!-- start page title -->
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box">
+                <h4 class="page-title">Program</h4>
+              </div>
+            </div>
+          </div>  
+                        <!-- end page title --> 
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form method="post" id="program">
+                                            <div id="basicwizard">  
+                                                <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                                                    <li class="nav-item">
+                                                      <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab" class="nav-link">
+                                                        <!-- <span class="number">1</span> -->
+                                                        <span class="d-none d-sm-inline">Create Program</span>
+                                                      </a>
+                                                    </li>
+                                                  </ul>
+                                                <div class="tab-content b-0 mb-0">
+                                                    <div class="tab-pane" id="basictab1">
+                                                        <div class="row">
+                                                            <div class="col-12">
+
 
                                                                 <div class="row mb-3">
                                                                     <label class="col-md-3 col-form-label" for="password">
@@ -172,4 +293,4 @@ $.ajax({
           
         
           {% endblock extra_js%}
-          {% endblock %}
+          {% endblock %} {% endcomment %} 

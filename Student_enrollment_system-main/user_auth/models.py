@@ -245,7 +245,7 @@ class village(models.Model):
 
 class Programs(models.Model):
     id = models.AutoField(primary_key=True)
-    state=models.ForeignKey(State,on_delete=models.CASCADE)
+    # state=models.ForeignKey(State,on_delete=models.CASCADE)
     program_name = models.CharField(max_length=255)
     program_abb=models.CharField(max_length=3)
     created_by=models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='programs')

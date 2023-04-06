@@ -96,19 +96,29 @@ class CreateProgram(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = ProgramSerializer
-
-    def get_queryset(self):
-        state = self.request.query_params.get('state', None)
-        if state is not None:
-            queryset = Programs.objects.filter(state=state)
-        else:
-            queryset = Programs.objects.all()
-            # state=State.objects.filter(id=queryset)
-            
-        return queryset
+    queryset = Programs.objects.all()
 
     def perform_create(self, serializer):
+        print(self.request.data)
         serializer.save(created_by=self.request.user)
+
+# class CreateProgram(generics.ListCreateAPIView):
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = ProgramSerializer
+
+#     def get_queryset(self):
+#         state = self.request.query_params.get('state', None)
+#         if state is not None:
+#             queryset = Programs.objects.filter(state=state)
+#         else:
+#             queryset = Programs.objects.all()
+#             # state=State.objects.filter(id=queryset)
+            
+#         return queryset
+
+#     def perform_create(self, serializer):
+#         serializer.save(created_by=self.request.user)
 
 
 class GetstateProgram(generics.ListCreateAPIView):
