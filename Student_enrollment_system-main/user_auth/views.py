@@ -380,10 +380,43 @@ def all_mentors(request):
     return render(request, 'Student_template/mentors.html', context)
 
 from django.shortcuts import render
-from .models import State
+from .models import State,Block
 
 def all_states(request):
     states = State.objects.all()
     context = {'states': states}
     return render(request, 'Student_template/states.html', context)
 
+def all_blocks(request):
+    blocks = Block.objects.all()
+    context = {'blocks': blocks}
+    return render(request, 'Student_template/blocks.html', context)
+
+from django.shortcuts import render
+
+from .models import State_allocation,Block_allocation
+
+def state_alloc(request):
+    state_allocs = State_allocation.objects.all()
+    context = {
+        'state_allocs': state_allocs
+    }
+    return render(request, 'Student_template/state_alloc.html', context)
+
+def show_allocated_blocks(request):
+    allocated_blocks = Block_allocation.objects.all()
+    return render(request, 'student_template/block_alloc.html', {'allocated_blocks': allocated_blocks})
+
+
+
+
+from django.shortcuts import render
+from .models import State, Programs
+
+def program_state_form(request):
+    states = State.objects.filter(status=True)
+    programs = Programs.objects.all()
+    if request.method == 'POST':
+        selected_program = request.POST.get('program')
+        selected_state = request.POST.get('state')
+    return render(request, 'student_template/program_alloc.html', {'states': states, 'programs': programs})

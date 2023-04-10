@@ -1,0 +1,293 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+      
+<!-- jQuery library file -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js">
+</script>
+{% block content %}
+<div class="content-page">
+    <div class="content"> <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#mentorcreate">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <h4 class="header-title mb-3">Block Allocated</h4>
+
+                <div class="table-responsive">
+                    <table id="block_user_table" class="table table-striped table-nowrap table-centered mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Block Name</th>
+                                <th>Block User Name</th>
+                                <!-- <th>Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody >
+                            
+                        </tbody>
+                    </table>
+
+                    <!-- <a href="/Student_enrollment_system/user_auth/templates/temp/see_all_users.html">See
+                        All Users</a> -->
+                </div> <!-- end table-responsive-->
+
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- End All Blocks-->
+    <div class="modal fade" id="mentorcreate" tabindex="-1" role="dialog" aria-labelledby="mentorcreateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mentorcreateLabel">BLOCK ALLOCATION</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+    
+                    <form method="post" id="block">
+                        <div id="basicwizard">
+                            <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                                <li class="nav-item">
+                                    <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab"
+                                        class="nav-link">
+
+                                        <span class="d-none d-sm-inline">Create</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content b-0 mb-0">
+                                <div class="tab-pane" id="basictab1">
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <div class="row mb-3">
+                                                <label class="col-md-3 col-form-label" for="block_user">
+                                                    Select Block user</label>
+                                                <div class="col-md-9">
+                                                    <select id="block_user" class="form-control"
+                                                        name="block_user"></select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-md-3 col-form-label" for="password">
+                                                    Select State name</label>
+                                                <div class="col-md-9">
+                                                    <select id="state_name" class="form-control"
+                                                        name="state_name" onchange="myState()" ></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-md-3 col-form-label" for="password">
+                                                    Select Block name</label>
+                                                <div class="col-md-9">
+                                                    <select id="block_name" class="form-control"
+                                                        name="block_name"></select>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="row mb-3">
+                                                <label class="col-md-3 col-form-label"
+                                                    for="userName">Block Name</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" id="name"
+                                                        name="Name" placeholder="Enter the Block name">
+                                                </div>
+                                            </div> -->
+
+                                        </div> <!-- end col -->
+                                    </div> <!-- end row -->
+
+                                    <ul class="pager wizard mb-0 list-inline text-end mt-2">
+                                        <li class="next list-inline-item">
+                                            <input type="submit" class="btn btn-success">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end tab pane -->
+
+
+                                <!-- end tab pane -->
+
+
+                            </div> <!-- tab-content -->
+                        </div> <!-- end #basicwizard-->
+                    </form>
+
+                
+            </div>
+        </div>
+      </div>
+    </div>
+{% include 'Student_template/footer.html' %}
+{% block extra_js%}
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+    var table = $('#block_user_table').DataTable({
+        "ajax": {
+            url: "{% url 'block_allocation_list' %}",
+            type: "GET",
+            contentType: "application/json",
+            headers: { "Authorization": `token ${getToken()}` },
+            dataSrc: function (res) {
+                return res;
+            }
+        },
+        "columns": [
+            { "data": "block.id" },
+            { "data": "block.name" },
+            { "data": "user.username" },
+            // {
+            //     "data": null,
+            //     // "render": function (data, type, row) {
+            //         // var html = '<a href="#" onclick="FetchStateallocatatedblock(\'' + row.id + '\')" data-toggle="modal" data-target="#myModal_allocate_block"><i class="fas fa-edit"></i></a>';
+            //         // return html;
+            //     }
+            // }
+        ]
+    });
+});
+</script>
+<script type="text/javascript">
+    function myState(){
+        var x = document.getElementById("state_name").value
+        console.log("%%&&***",x)
+        localStorage.setItem('state_id',x)
+        $("document").ready(function () {
+$.ajax({
+url: "http://127.0.0.1:8000/state/"+x+"/Block/",
+type: "GET",
+contentType: "application/json",
+headers: {
+'Authorization': `token ${getToken()}`,
+'Content-Type': 'application/json'
+},
+success: function (res) {
+console.log(res)
+var options = "";
+for (item of res) {
+    console.log(item)
+    options = options + `<option value="${item.id}"> ${item.name}  </option>`
+}
+$("#block_name").html(options)
+}
+})
+})
+
+    }
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+        $("#block").submit(function (e) {
+            e.preventDefault();
+            var name = $("#block_user").val();
+            var block = $("#block_name").val();
+
+            console.log(name);
+            $.ajax({
+                url: "http://127.0.0.1:8000/block_allocate/",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ "user": name, "block": block }),
+                headers: {
+                    'Authorization': `token ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    console.log(data);
+                    localStorage.getItem('token', data.token)
+                    console.log(localStorage.getItem('token'))
+                    window.location.href = "/home";
+                },
+                error: function () {
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please check your Block allocation',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                        });
+                }
+            });
+
+        });
+    });
+
+    $("document").ready(function () {
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_user_get/",
+            type: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': `token ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
+            success: function (res) {
+                console.log(res)
+                var options = "";
+                for (item of res) {
+                    console.log(item)
+                    options = options + `<option value="${item.id}"> ${item.username}  </option>`
+                }
+                $("#block_user").html(options)
+            }
+        })
+    })
+
+
+state_id = localStorage.getItem('state_id')
+console.log("$$$$",state_id)
+
+$("document").ready(function () {
+
+$.ajax({
+url: "http://127.0.0.1:8000/state_create/",
+type: "GET",
+contentType: "application/json",
+headers: {
+'Authorization': `token ${getToken()}`,
+'Content-Type': 'application/json'
+},
+success: function (res) {
+console.log(res)
+var options = "";
+for (item of res) {
+    console.log(item)
+    options = options + `<option value="${item.id}"> ${item.name}  </option>`
+}
+$("#state_name").html(options)
+}
+})
+})
+</script>
+                       <!-- LOGIN USER SHOW -->
+<script>
+$("document").ready(function (){
+var user_name =  localStorage.getItem('username')
+console.log(user_name)
+
+document.getElementById("username").innerHTML = user_name;
+
+
+});
+</script>
+{%  endblock extra_js %}
+{% endblock %}

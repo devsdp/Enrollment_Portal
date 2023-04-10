@@ -135,6 +135,14 @@ urlpatterns = [
     path('programslist/', views.programslist_view, name='programslist'),
     path('all_mentors/', views.all_mentors, name='allmentors'),
     path('all_states/', views.all_states, name='allstates'),
+    path('all_blocks/', views.all_blocks, name='allblocks'),
+    path('state_alloc/', views.state_alloc, name='statealloc'),
+    path('block_alloc/', views.show_allocated_blocks, name='blockalloc'),
+    path('program_alloc/', views.program_state_form, name='programalloc'),
+
+
+
+
 
 
     

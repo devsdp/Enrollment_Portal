@@ -315,7 +315,7 @@
                                     aria-controls="sidebarDashboards" class="waves-effect" >
                                     <i class="ri-dashboard-line"></i>
                                     <!-- <span class="badge bg-success rounded-pill float-end">3</span> -->
-                                    <span> Admin View All </span></a>
+                                    <span> ADMIN VIEW </span></a>
 
                                 </li>
                                 <li  id="state_dashboard" class="hide">
@@ -323,7 +323,7 @@
                                     aria-controls="sidebarDashboards" class="waves-effect">
                                     <i class="ri-dashboard-line"></i>
                                     <!-- <span class="badge bg-success rounded-pill float-end">3</span> -->
-                                    <span>State Dashboard</span>
+                                    <span>STATE DASHBOARD</span>
                                 </a>
                                 </li>
                                 <li  id="block_dashboard" class="hide">
@@ -331,7 +331,7 @@
                                     aria-controls="sidebarDashboards" class="waves-effect">
                                     <i class="ri-dashboard-line"></i>
                                     <!-- <span class="badge bg-success rounded-pill float-end">3</span> -->
-                                    <span>Block Dashboard </span>
+                                    <span>BLOCK DASHBOARD </span>
                                 </a>
                                 </li>
                                     
@@ -344,37 +344,43 @@
                                             <a href="/block_create">District</a>
                                         </li> -->
                                         <li id="program_s" class="hide">
-                                            <a href="/programslist">Programs</a>
+                                            <a href="/programslist">PROGRAMS</a>
                                         </li>
                                         <li id="village_s" class="hide">
-                                            <a href="/village">Villages</a>
+                                            <a href="/village">VILLAGES</a>
                                         </li>
-                                    {% comment %} </li> {% endcomment %}
                                     
+                                        <li id="mentor_data_s" class="hide">
+                                            <a href="/all_mentors">MENTOR</a>
+                                        </li>
                                         <li id="user_create_s" class="hide">
-                                            <a href="/all_states">States</a>
+                                            <a href="/all_states">STATES</a>
                                         </li>
                                         <li id="block_user_s" class="hide">
                                             <a href="/block_user">Block User Create</a>
                                         </li>
-                                        <li id="mentor_data_s" class="hide">
-                                            <a href="/all_mentors">Mentor</a>
-                                        </li>
-                                        <li id="state_allocation_s" class="hide">
+                                        {% comment %} <li id="state_allocation_s" class="hide">
                                             <a href="/state_allocation">State Allocation</a>
-                                        </li>
-                                        <li id="block_allocate_s" class="hide">
-                                            <a href="/block_allocation">Block Allocation</a>
+                                        </li> {% endcomment %}
+                                        <li id="block_alloc" class="hide">
+                                            <a href="/block_alloc">BLOCK ALLOCATION</a>
                                         </li>
                                         <li id="students_s" class="hide">
-                                            <a href="/student_view_data">All Students</a>
+                                            <a href="/student_view_data">ALL STUDENTS</a>
                                         </li>
                                         <li id="all_user" class="hide">
-                                            <a href='/all_user_view'>All Users</a>
+                                            <a href='/all_user_view'>ALL USERS</a>
                                         </li>
-                                        {% comment %} <li>
-                                            <a href='/programslist'>Programs List</a>
-                                        </li> {% endcomment %}
+                                        <li id="all_blocks" class="hide">
+                                            <a href='/all_blocks'>BLOCKS</a>
+                                        </li>
+                                        <li id="state_alloc" class="hide">
+                                            <a href='/state_alloc'>STATE ALLOCATION</a>
+                                        </li>
+                                        <li id="program_alloc" class="hide">
+                                            <a href='/program_alloc'>program ALLOCATION</a>
+                                        </li>
+                                         
                                     </ul>
                                 </div>
                             </li>
