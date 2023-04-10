@@ -132,6 +132,11 @@ urlpatterns = [
     path('result_students',views.results, name='results'),
     path('multiple_choice', views.multiple_student_update, name="multiple_choice"),
     path('block_user', views.block_user, name="block_user"),
+    path('programslist/', views.programslist_view, name='programslist'),
+    path('all_mentors/', views.all_mentors, name='allmentors'),
+    path('all_states/', views.all_states, name='allstates'),
+
+
     
 
 

@@ -1,0 +1,661 @@
+{% extends 'Student_template/header.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+      
+<!-- jQuery library file -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js">
+</script>
+{% block content %}
+<div class="content-page">
+    <div class="content"> <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#mentorcreate">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                {% comment %} <button type="button" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#mentorcreate">
+                    <i class="fas fa-plus"></i>
+                </button> {% endcomment %}
+                <h4 class="header-title mb-3">All Mentor</h4>
+
+                <div class="table-responsive">
+                    <table  id="Mentor_data" class="table table-striped table-nowrap table-centered mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Mentor Name</th>
+                                <th>Phone Number </th>
+                                <th>State</th>
+                                <th>District</th>
+                                <th>Block</th>
+                                <th>Village</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- <a href="/Student_enrollment_system/user_auth/templates/temp/see_all_users.html">See
+                        All Users</a> -->
+                </div> <!-- end table-responsive-->
+
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- End All Mentor-->
+</div>
+</div>
+
+
+          <!-- start page title -->
+         
+          <!-- end page title -->
+
+          {% comment %} <div class="row">
+            <div class="col-xl-6">
+              <div class="card">
+                <div class="card-body"> {% endcomment %}
+
+                  <!-- <h4 class="header-title mb-3">Create User</h4> -->
+                  <div class="modal fade" id="mentorcreate" tabindex="-1" role="dialog" aria-labelledby="mentorcreateLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="mentorcreateLabel">Create Mentor</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                  <form method="post" id="mentorcreate">
+                    <div id="basicwizard">
+
+
+
+                      <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
+                        <li class="nav-item">
+                          <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab" class="nav-link">
+                            <!-- <span class="number">1</span> -->
+                            <span class="d-none d-sm-inline">Create Mentor</span>
+                          </a>
+                        </li>
+
+                      </ul>
+
+
+                      <div class="tab-content b-0 mb-0">
+                        <div class="tab-pane" id="basictab1">
+                          <div class="row">
+                            <div class="col-12">
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="firstname">Name :</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control" id="first_name" name="first_name"
+                                    placeholder="Enter the Firstname">
+                                </div>
+                              </div>
+
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="username"> User Name :</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control" id="usersname" name="username"
+                                    placeholder="Enter the Username" required>                                
+                                </div>
+
+                              </div> -->
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                                  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="\+?[0-9]{10,13}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+]/g,'');" required>
+                                </div>
+                              </div>
+                              
+                            
+                              
+                              
+
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                                  <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+91" value="+91" maxlength="13" pattern="[+]{1}[0-9]{2}[0-9]{10}" required>
+                                </div>
+                              </div> -->
+                              
+                                   
+                              <!-- <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="PhoneNumber">Phone Number :</label>
+                                <div class="col-md-9">
+                               <input type="number" class="form-control" id="phone_number" name="phone_number"placeholder="Enter the Phone Number" value="+91" maxlength="10">
+                                </div>
+                              </div> -->
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="state">State :</label>
+                                <div class="col-md-9">
+                                  <select id="state" class="form-control" onchange="myState()" name='state'>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="district">District :</label>
+                                <div class="col-md-9">
+                                  <select id="district" class="form-control" onchange="myDistrict()" name='district'>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="block">Block :</label>
+                                <div class="col-md-9">
+                                  <select id="block" onchange="myblock()" class="form-control" name='block'>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label class="col-md-3 col-form-label" for="village">Village :</label>
+                                <div class="col-md-9">
+                                  <select id="village" class="form-control" name='village'>                    
+                                  </select>
+                                </div>
+                              </div>
+                             
+
+                            </div> <!-- end col -->
+                          </div> <!-- end row -->
+
+                          <ul class="pager wizard mb-0 list-inline text-end mt-2">
+                            <li class="next list-inline-item">
+                              <input type="submit" class="btn btn-success">
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- end tab pane -->
+
+
+                        <!-- end tab pane -->
+
+
+                      </div> <!-- tab-content -->
+                    </div> <!-- end #basicwizard-->
+                  </form>
+                </div>
+            </div>
+          </div>
+        </div>
+                {% comment %} </div> <!-- end card-body -->
+              </div> <!-- end card-->
+            </div> <!-- end col --> {% endcomment %}
+
+            <!-- end row -->
+
+          </div> <!-- container -->
+
+        </div> <!-- content --> 
+
+{% include 'Student_template/footer.html' %}
+{% block extra_js%}
+
+
+<script>
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+
+    $("document").ready(function () {
+    $.ajax({
+        url: "http://127.0.0.1:8000/Mentor_get/",
+        type: "GET",
+        contentType: "application/json",
+        headers: { "Authorization": `token ${getToken()}` },
+        success: function (res) {
+            var table = $("#Mentor_data").DataTable({
+                data: res,
+                columns: [
+                    { data: "id" },
+                    { data: "name" },
+                    { data: "phone_number" },
+                    { data: "State" },
+                    { data: "district" },
+                    { data: "Block" },
+                    { data: "village" },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `
+                                <a href="#" onclick="Mentorfetchedit(${data.id});"  data-toggle="modal" data-target="#Mentor_edit"><i class="fas fa-edit"></i></a> | 
+                                <a href="#" onclick="Mentordelete(${data.id});" data-toggle="modal" data-target="#Mentor_delete"><i class="fas fa-trash-alt"></i></a>
+                            `;
+                        },
+                    },
+                ],
+            });
+        },
+    });
+});
+
+
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function Mentorfetchedit(itemId) {
+
+        $("document").ready(function () {
+    //edit in droupdown get vilage data 
+            $.ajax({
+                url: "http://127.0.0.1:8000/village_create/",
+                type: "GET",
+                contentType: "application/json",
+                headers: {
+                    'Authorization': `token ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                success: function (res) {
+                    // console.log(res)
+                    var options = "";
+                    for (item of res) {
+                        // console.log(item)
+                        options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                    }
+                    $("#village_e").html(options)
+                }
+            })
+
+    //edit in droupdown get state data
+            $.ajax({
+                url: "http://127.0.0.1:8000/state_create/",
+                type: "GET",
+                contentType: "application/json",
+                headers: {
+                    'Authorization': `token ${getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                success: function (res) {
+                    console.log(res)
+                    var options = "";
+                    for (item of res) {
+                        console.log(item)
+                        options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                    }
+                    console.log(options)
+                    $("#State_e").html(options)
+                }
+            })
+        })
+
+    //edit in droupdown get block data
+        $.ajax({
+            url: "http://127.0.0.1:8000/block_create/",
+            type: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': `token ${getToken()}`,
+                'Content-Type': 'application/json'
+            },
+            success: function (res) {
+                console.log(res)
+                var options = "";
+                for (item of res) {
+                    console.log(item)
+                    options = options + `<option value="${item.id}"> ${item.name}  </option>`
+                }
+                console.log(options)
+                $("#Block").html(options)
+            }
+        })
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                // console.log(data)
+                var name = data.name;
+                // console.log(name)
+                var phone_number = data.phone_number;
+                // console.log(phone_number)
+                var state = data.state.name;
+                // console.log("$$$",state_name)
+                var Block_name = data.block.name;
+                //  console.log("@@@@@",Block_name)
+                var village_name = data.village.name;
+                // console.log(village_name)
+
+                document.getElementById("name").value = name;
+                document.getElementById("fphone_number").value = phone_number;
+                document.getElementById("State").value = state;
+                document.getElementById("Block").value = Block_name;
+                document.getElementById("village_e").value = village_name;
+
+            },
+
+        });
+
+        $("document").ready(function () {
+            $("#mentor_update").submit(function (e) {
+                e.preventDefault();
+
+
+                var phone_number = $("#fphone_number").val();
+                var name = $("#name").val();
+                var state = $("#State_e").val();
+                var block = $("#Block").val();
+                var village = $("#village_e").val();
+
+
+
+                $.ajax({
+                    url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+                    type: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "phone_number": phone_number, "name": name, "state": state, "block": block, "village": village }),
+                    headers: {
+                        'Authorization': `token ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.getItem('token', data.token)
+                        console.log(localStorage.getItem('token'))
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please check your name',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            })
+        });
+    }
+
+
+    //   delete
+
+    function getToken() {
+        // This function should return the user token dynamically
+        return (localStorage.getItem('token'));
+    }
+    function Mentordelete(itemId) {
+
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+            method: "GET",
+            headers: { "Authorization": `token ${getToken()}` },
+            success: function (data) {
+
+                // Remove item from the HTML table
+                var userid = data.id;
+                console.log(userid)
+            },
+        });
+                  
+        $('#Mentor_del').click(function () {
+            // Send an AJAX request to delete the user
+            $.ajax({
+                url: "http://127.0.0.1:8000/Mentor_details/" + itemId + '/',
+                method: "DELETE",
+                headers: { "Authorization": `token ${getToken()}` },
+                success: function (data) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                },
+            });
+        });
+    }
+
+</script>
+<script>
+
+    function getToken() {
+                    // This function should return the user token dynamically
+                    return (localStorage.getItem('token'));
+                }
+        function myState(){
+                    var x = document.getElementById("state").value
+                    console.log("%%&&***",x)
+                    localStorage.setItem('state_id',x)
+                    $("document").ready(function () {
+        $.ajax({
+        url: "http://127.0.0.1:8000/state/"+x+"/district/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#district").html(options)
+        }
+    })
+    })
+    
+}
+
+
+function myDistrict(){
+                    var district_x = document.getElementById("district").value
+                    console.log("%%&&***",district_x)
+                    localStorage.setItem('district_id',district_x)
+                    $("document").ready(function () {
+        $.ajax({
+        url: "http://127.0.0.1:8000/district/"+district_x+"/block/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#block").html(options)
+        }
+    })
+    })
+    
+}
+
+function myblock(){
+  var y = document.getElementById("block").value
+  // localStorage.setItem('block_id',y)
+  console.log("block id",y)
+                   
+$("document").ready(function() {
+        $.ajax({
+        url: "http://127.0.0.1:8000/block/"+y+"/villages/",
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': `token ${getToken()}`,
+            'Content-Type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res)
+            var options = "";
+            for (item of res) {
+                console.log(item)
+                options = options + `<option value="${item.id}"> ${item.name}  </option>`
+            }
+            $("#village").html(options)
+        }
+    })
+    })
+    
+                }
+    
+    </script>
+<script type="text/javascript">
+function getToken() {
+  // This function should return the user token dynamically
+  return (localStorage.getItem('token'));
+}
+$("document").ready(function () {
+  $("#mentorcreate").submit(function (e) {
+    e.preventDefault();
+  
+    var firstname = $("#first_name").val();
+    console.log(firstname);
+    // var username = $("#usersname").val();
+    // console.log(username);
+    var PhoneNumber = $("#phone_number").val();
+    console.log(PhoneNumber);
+    var state = $("#state").val();
+    console.log(state);
+    var district = $("#district").val();
+    console.log(district);
+    var block = $("#block").val();
+    console.log(block);
+    var village = $("#village").val();
+    console.log(village);
+
+
+    $.ajax({
+      url: "http://127.0.0.1:8000/mentor_create/",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ "name": firstname , "phone_number": PhoneNumber, "state": state, "block": block, "village": village,"district":district }),
+      headers: {
+        'Authorization': `token ${getToken()}`,
+        'Content-Type': 'application/json'
+      },
+      success: function (data) {
+        console.log(data);
+        localStorage.getItem('token', data.token)
+        console.log(localStorage.getItem('token'))
+        window.location.href = "/home";
+      },
+      error: function () {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please check your user',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+}
+    });
+
+  });
+});
+
+// state get 
+$("document").ready(function () {
+
+$.ajax({
+url: "http://127.0.0.1:8000/state_create/",
+type: "GET",
+contentType: "application/json",
+headers: {
+  'Authorization': `token ${getToken()}`,
+  'Content-Type': 'application/json'
+},
+success: function (res) {
+  console.log(res)
+  var options = "";
+  for (item of res) {
+      console.log(item)
+      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+  }
+  $("#state").html(options)
+}
+})
+})
+
+// district get 
+$("document").ready(function () {
+
+$.ajax({
+url: "http://127.0.0.1:8000/create_district/",
+type: "GET",
+contentType: "application/json",
+headers: {
+  'Authorization': `token ${getToken()}`,
+  'Content-Type': 'application/json'
+},
+success: function (res) {
+  console.log(res)
+  var options = "";
+  for (item of res) {
+      console.log(item)
+      options = options + `<option value="${item.id}"> ${item.name}  </option>`
+  }
+  $("#district").html(options)
+}
+})
+})
+
+$("document").ready(function () {
+
+$.ajax({
+  url: "http://127.0.0.1:8000/block_create/",
+  type: "GET",
+  contentType: "application/json",
+  headers: {
+      'Authorization': `token ${getToken()}`,
+      'Content-Type': 'application/json'
+  },
+  success: function (res) {
+      console.log(res)
+      var options = "";
+      for (item of res) {
+          console.log(item)
+          options = options + `<option value="${item.id}"> ${item.name}  </option>`
+      }
+      $("#block").html(options)
+  }
+})
+})
+
+// village get 
+
+$("document").ready(function () {
+
+$.ajax({
+  url: "http://127.0.0.1:8000/village_create/",
+  type: "GET",
+  contentType: "application/json",
+  headers: {
+      'Authorization': `token ${getToken()}`,
+      'Content-Type': 'application/json'
+  },
+  success: function (res) {
+      console.log(res)
+      var options = "";
+      for (item of res) {
+          console.log(item)
+          options = options + `<option value="${item.id}"> ${item.name}  </option>`
+      }
+      $("#village").html(options)
+  }
+})
+})
+</script>
+
+
+
+{% endblock extra_js %}
+{% endblock %}

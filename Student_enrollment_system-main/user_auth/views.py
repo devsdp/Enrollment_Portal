@@ -350,3 +350,40 @@ def state_login_admin(request):
 
             return redirect('/home')
         time.sleep(86400) #
+from django.shortcuts import render
+from .models import Programs
+
+# def programs_view(request):
+#     Program = Programs.objects.all()
+#     context = {
+#         'program': program
+#     }
+#     return render(request, 'Student_template/programs.html', context)
+def programslist_view(request):
+
+    Program = Programs.objects.all()
+
+    context={
+        "Program" :program
+    }
+
+    return render(request, "Student_template/programs.html",context)
+
+from django.shortcuts import render
+from .models import Mentor
+
+def all_mentors(request):
+    mentors = Mentor.objects.all()
+    context = {
+        'mentors': mentors,
+    }
+    return render(request, 'Student_template/mentors.html', context)
+
+from django.shortcuts import render
+from .models import State
+
+def all_states(request):
+    states = State.objects.all()
+    context = {'states': states}
+    return render(request, 'Student_template/states.html', context)
+

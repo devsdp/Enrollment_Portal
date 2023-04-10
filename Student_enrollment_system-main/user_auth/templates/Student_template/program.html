@@ -1,4 +1,4 @@
-{% extends 'Student_template/header.html' %}
+{% comment %} {% extends 'Student_template/header.html' %}
 {% load static %}
 
 {% block content %}
@@ -108,6 +108,7 @@
                     success: function (data) {
                         console.log('success');
                         console.log(data);
+                        //window.location.href = "/home";
                     },
                     error: function (error) {
                         console.log(error);
@@ -117,7 +118,7 @@
         });
     </script>
     {% endblock extra_js%}
-          {% endblock %}
+          {% endblock %} {% endcomment %}
 {% comment %} 
  {% extends 'Student_template/header.html' %}
 {% load static %}
