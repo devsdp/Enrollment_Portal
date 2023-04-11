@@ -409,14 +409,48 @@ def show_allocated_blocks(request):
 
 
 
-
-from django.shortcuts import render
-from .models import State, Programs
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Programs, State, ProgramAllocation
+from datetime import datetime
 
 def program_state_form(request):
-    states = State.objects.filter(status=True)
     programs = Programs.objects.all()
+    states = State.objects.all()
+    allocations = ProgramAllocation.objects.all()
+
     if request.method == 'POST':
-        selected_program = request.POST.get('program')
-        selected_state = request.POST.get('state')
-    return render(request, 'student_template/program_alloc.html', {'states': states, 'programs': programs})
+        program_id = request.POST.get('program')
+        state_id = request.POST.get('state')
+
+        # Check if program allocation already exists
+        allocation_exists = ProgramAllocation.objects.filter(program_id=program_id, state_id=state_id).exists()
+
+        if allocation_exists:
+            messages.error(request, 'Program allocation already exists.')
+        else:
+            program = Programs.objects.get(id=program_id)
+            program_allocation = ProgramAllocation(program=program, state_id=state_id, allocation_date=datetime.now())
+            program_allocation.allocation_time = datetime.now().time()
+
+            program_allocation.save()
+            messages.success(request, 'Program allocation created successfully.')
+
+        return redirect('programalloc')
+
+    context = {
+        'programs': programs,
+        'states': states,
+        'allocations': allocations
+    }
+    return render(request, 'student_template/program_alloc.html', context)
+
+
+
+# def program_state_form(request):
+#     states = State.objects.filter(status=True)
+#     programs = Programs.objects.all()
+#     if request.method == 'POST':
+#         selected_program = request.POST.get('program')
+#         selected_state = request.POST.get('state')
+#     return render(request, 'student_template/program_alloc.html', {'states': states, 'programs': programs})

@@ -7,35 +7,96 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        
                         <div class="page-title-box">
-                            <h1>Program and State Form</h1>
+                            <h4>PROGRAM ALLOCATION</h4>
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <form method="POST">
-                            {% csrf_token %}
-                            <label for="program">Select Program:</label>
-                            <select name="program" id="program">
-                                {% for program in programs %}
-                                    <option value="{{ program.id }}">{{ program.program_name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="state">Select State:</label>
-                            <select name="state" id="state">
-                                {% for state in states %}
-                                    <option value="{{ state.id }}">{{ state.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="submit" value="Submit">
-                        </form>
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#mentorcreate">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table id="program_allocations" class="table">
+                            <thead>
+                                <tr>
+                                    <th>PROGRAM NAME</th>
+                                    <th>STATE NAME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for allocation in allocations %}
+                                <tr>
+                                    <td>{{ allocation.program.program_name }}</td>
+                                    <td>{{ allocation.state.name }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    
+                    
 
             </div>
         </div>
     </div>
-{%  include "Student_template/footer.html" %}
+
+    <!-- Popup form -->
+    <div class="modal fade" id="mentorcreate" tabindex="-1" aria-labelledby="mentorcreateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mentorcreateLabel">CREATE ALLOCATION</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="program">SELECT PROGRAM:</label>
+                            <select name="program" id="program" class="form-select">
+                                {% for program in programs %}
+                                    <option value="{{ program.id }}">{{ program.program_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="state">SELECT STATE:</label>
+                            <select name="state" id="state" class="form-select">
+                                {% for state in states %}
+                                    <option value="{{ state.id }}">{{ state.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "Student_template/footer.html" %}
+
+    <script>
+        $(document).ready(function() {
+            $('#program_allocations').DataTable({
+                "paging": true, // Enable pagination
+                "pageLength": 10, // Set the
+
+                "searching": true, // Enable searching
+                "ordering": true, // Enable sorting
+                "order": [[ 0, "asc" ]] // Set the default sorting order
+            });
+        });
+    </script>
 {% endblock %}
+
+            

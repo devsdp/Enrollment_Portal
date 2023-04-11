@@ -369,3 +369,16 @@ class UserAdmin(models.Model):
 
     class Meta:
         db_table = "UserAdmin"
+
+
+from django.db import models
+from .models import Programs, State
+
+class ProgramAllocation(models.Model):
+    program = models.ForeignKey(Programs, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    allocation_date = models.DateField()
+    allocation_time = models.TimeField()
+
+    def __str__(self):
+        return f"{self.program.program_name} - {self.state.name}"
