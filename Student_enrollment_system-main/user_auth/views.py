@@ -254,11 +254,102 @@ def multiple_student_update(request):
     return redirect('/student_view_data')
 
 
-# def logout_request(request):
-#     logout(request)
-#     return redirect("/login_user")
+def logout_request(request):
+    logout(request)
+    return redirect("/login_user")
 
 #new code
+# from .models import District
+# def state_login_admin(request):
+#     url = "http://127.0.0.1:8000/login/"
+#     payload = json.dumps({
+#         "username": "admin",
+#         "password": "123456"
+#     })
+#     headers = {
+#         'Content-Type': 'application/json'
+#     }
+#     response_login = requests.post(url, headers=headers, data=payload)
+#     login_details = json.loads(response_login.text)
+#     print("Token:", login_details['token'])
+#     token = login_details['token']
+
+#     while True:
+#         url = "https://prathamyouthnet.org/apis/enrollment-id/dbfetch-states.php?token=eyNsWgAdBF0KafwGP?wOCRVn-tJE=zlc9v-=-9h5rHeh?ZTB?uAKYxDxv8zRgJy?uP-Kn?57kT?3Kp!202RROdY!a1XRy3UVc5S/UPzG4zCsUbT-Pr3nnuW0fhCTp93L"
+#         response = requests.get(url)
+#         data = json.loads(response.text)
+
+#         if data[0]['is_error'] == '0':
+#             for item in data[1:]:
+#                 state_name = item['StateName']
+#                 if State.objects.filter(name=state_name).exists():
+#                     print("State already exists:", state_name)
+#                     continue
+                
+#                 else:
+#                     state_name = item['StateName']
+#                     url = "http://127.0.0.1:8000/state_create/"
+#                     payload = json.dumps({
+#                         "name": state_name,
+#                     })
+#                     headers = {
+#                         'Authorization': 'token ' + login_details['token'],
+#                         'Content-Type': 'application/json'  
+#                     }
+#                     response_state = requests.post(url, headers=headers, data=payload.encode('utf-8'))
+#                     print(response_state.text)
+                
+
+#                 # Get district data from external API
+#                 url = f"https://prathamyouthnet.org/apis/enrollment-id/dbfetch-state-districts.php?state={state_name}&&token=eyNsWgAdBF0KafwGP?wOCRVn-tJE=zlc9v-=-9h5rHeh?ZTB?uAKYxDxv8zRgJy?uP-Kn?57kT?3Kp!202RROdY!a1XRy3UVc5S/UPzG4zCsUbT-Pr3nnuW0fhCTp93L"
+#                 response = requests.get(url)
+#                 district_data = json.loads(response.text)
+
+#                 if district_data[0]['is_error'] == '0':
+#                     for district_item in district_data[1:]:
+#                         district_name = district_item['DistrictName']
+
+#                         state = State.objects.filter(name=state_name).first()
+
+#                         if state:
+#                             url = "http://127.0.0.1:8000/create_district/"
+#                             payload = json.dumps({
+#                                 "name": district_name,
+#                                 "state": state.pk
+#                             })
+#                             headers = {
+#                                 'Authorization': 'token ' + token,
+#                                 'Content-Type': 'application/json'  
+#                             }
+#                             response_district = requests.post(url, headers=headers, data=payload)
+#                             print(response_district.text)
+
+#                             url = f"https://prathamyouthnet.org/apis/enrollment-id/dbfetch-state-district-blocks.php?state={state_name}&&district={district_name}&&token=eyNsWgAdBF0KafwGP?wOCRVn-tJE=zlc9v-=-9h5rHeh?ZTB?uAKYxDxv8zRgJy?uP-Kn?57kT?3Kp!202RROdY!a1XRy3UVc5S/UPzG4zCsUbT-Pr3nnuW0fhCTp93L"
+#                             response_village = requests.get(url)
+#                             block_data = json.loads(response_village.text)
+                            
+#                             if block_data[0]['is_error'] == '0':
+#                                 for block_item in block_data[1:]:
+#                                     block_name = block_item['BlockName']
+
+
+#                                     district = District.objects.filter(name=district_name).first()
+
+#                                     if district:
+#                                         url = "http://127.0.0.1:8000/block_create/"
+#                                         payload = json.dumps({
+#                                             "name": block_name,
+#                                             "district": district.pk
+#                                         })
+#                                         headers = {
+#                                             'Authorization': 'token ' + token,
+#                                             'Content-Type': 'application/json'  
+#                                         }
+#                                         response_block = requests.post(url, headers=headers, data=payload)
+#                                         print(response_block.text)
+
+#             return redirect('/home')
+#         time.sleep(86400) #
 from .models import District
 def state_login_admin(request):
     url = "http://127.0.0.1:8000/login/"
@@ -325,8 +416,8 @@ def state_login_admin(request):
                             print(response_district.text)
 
                             url = f"https://prathamyouthnet.org/apis/enrollment-id/dbfetch-state-district-blocks.php?state={state_name}&&district={district_name}&&token=eyNsWgAdBF0KafwGP?wOCRVn-tJE=zlc9v-=-9h5rHeh?ZTB?uAKYxDxv8zRgJy?uP-Kn?57kT?3Kp!202RROdY!a1XRy3UVc5S/UPzG4zCsUbT-Pr3nnuW0fhCTp93L"
-                            response_village = requests.get(url)
-                            block_data = json.loads(response_village.text)
+                            response_block = requests.get(url)
+                            block_data = json.loads(response_block.text)
                             
                             if block_data[0]['is_error'] == '0':
                                 for block_item in block_data[1:]:
@@ -348,8 +439,36 @@ def state_login_admin(request):
                                         response_block = requests.post(url, headers=headers, data=payload)
                                         print(response_block.text)
 
+                                        url = f" https://prathamyouthnet.org/apis/enrollment-id/dbfetch-state-district-block-villages.php?state={state_name}&district={district_name}&block={block_name}&token=eyNsWgAdBF0KafwGP?wOCRVn-tJE=zlc9v-=-9h5rHeh?ZTB?uAKYxDxv8zRgJy?uP-Kn?57kT?3Kp!202RROdY!a1XRy3UVc5S/UPzG4zCsUbT-Pr3nnuW0fhCTp93L"
+                                        response_village = requests.get(url)
+                                        village_data = json.loads(response_village.text)
+                                        
+                                        if village_data[0]['is_error'] == '0':
+                                            for village_item in village_data[1:]:
+                                                village_name = village_item['VillageName']
+                                                block = Block.objects.filter(name=block_name).first()
+                                                
+                                                if block:
+                                                    url = "http://127.0.0.1:8000/village_create/"
+                                                    payload = json.dumps({
+                                                        "name": village_name,
+                                                        "block": block.pk
+                                                    })
+                                                    headers = {
+                                                        'Authorization': 'token ' + token,
+                                                        'Content-Type': 'application/json'  
+                                                    }
+                                                    response_village = requests.post(url, headers=headers, data=payload)
+                                                    print(response_village.text)
+
+
+
+
+                                        
+
             return redirect('/home')
         time.sleep(86400) #
+
 from django.shortcuts import render
 from .models import Programs
 

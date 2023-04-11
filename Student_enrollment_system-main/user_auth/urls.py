@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
-from .Adminview import Blockusercreate,DistrictCount,Districtcreate,Districtupdate,Villagedataview,Statecreate,Mentorget,BlockCount,Mentorcreate,Mentordetails,Stateallocategetview,Update_All_users,All_users,Stateupdate,All_Student,StudentCount,StateCount,StateGet,Blockcreate,BlockGet,Admincreate,admin_dashboard,AdminGet,Blockcreates,Blockupdateview,GetGroupStudent,Stateusercreate,StudentGroupcreate,Groupget,Groupcreate,Studentcreate,StudentGet,Stateallocateview,allocatedstateupdate,Blockallocateview,AllocatedBlockupdateview,Statecreate
+from .Adminview import UpdateVillageStatus,Blockusercreate,DistrictCount,Districtcreate,Districtupdate,Villagedataview,Statecreate,Mentorget,BlockCount,Mentorcreate,Mentordetails,Stateallocategetview,Update_All_users,All_users,Stateupdate,All_Student,InactiveVillagedataview,StudentCount,StateCount,StateGet,Blockcreate,BlockGet,Admincreate,admin_dashboard,AdminGet,Blockcreates,Blockupdateview,GetGroupStudent,Stateusercreate,StudentGroupcreate,Groupget,Groupcreate,Studentcreate,StudentGet,Stateallocateview,allocatedstateupdate,Blockallocateview,AllocatedBlockupdateview,Statecreate
 from .Blockuserview import GetstateProgramforclockuser,ProgramListByVillage,GetstateProgram,CreateProgram,StudentList,Block_allocated_datas,StudentCreateAPIView,Block_allocated_data,Programdetailedview,Getallocatedblock,Group_update,Villagecreate,VillageCount,Student_create,Villageupdate,Get_Student,Group_create_B,Bulk_Student_create,Student_update
 from .views import Userlogin
 from . import views
@@ -58,6 +58,10 @@ urlpatterns = [
 
     path('village_create/',Villagecreate.as_view(), name="village_create"),
     path('village_data/',Villagedataview.as_view(), name="village_data"),
+    path('inactive_village_data/',InactiveVillagedataview.as_view(), name='inactive_village_data'),
+    path('village_data/<int:pk>/status/', UpdateVillageStatus.as_view(), name='village_status'),
+
+
     path('Village_update/<int:pk>/',Villageupdate.as_view(), name="Village_update"),
     path('student_create/',Student_create.as_view(), name="student_create"),
     path('student_update/<int:pk>/',Student_update.as_view(), name="student_update"),

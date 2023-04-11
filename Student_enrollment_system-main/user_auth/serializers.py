@@ -329,6 +329,17 @@ class VillagedataSerializer(serializers.ModelSerializer):
         model = village
         fields = '__all__'
 
+        
+class InactiveVillagedataSerializer(serializers.ModelSerializer):
+    created_by = created_bySerializer(read_only=True)
+    block = serializers.StringRelatedField(source='block.name', read_only=True)
+    state = serializers.StringRelatedField(source='block.district.state.name', read_only=True)
+    district = serializers.StringRelatedField(source='block.district.name', read_only=True)
+
+    class Meta:
+        model = village
+        fields = '__all__'
+
 
 class VillageSerializer(serializers.ModelSerializer):
     created_by = created_bySerializer(read_only=True)

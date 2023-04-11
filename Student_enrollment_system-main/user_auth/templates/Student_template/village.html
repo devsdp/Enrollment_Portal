@@ -2,51 +2,127 @@
 {% load static %}
 
 {% block content %}
-    <div class="content-page">
-      <div class="content">
+<div class="content-page">
+    <div class="content">
 
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-widgets">
+      <div class="col-xl-20">
+          <div class="card">
+              <div class="card-body">
+                  <div class="card-widgets">
+                      
+                    <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
+                    data-bs-target="#villageModal"><i class="fas fa-plus"></i></a>
+
+            </div>
+            <h3 class="header-title mb-3">All Active Villages</h3>
+
+            <div class="table-responsive">
+                <table id="village_table" class="table table-striped table-nowrap table-centered mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>State</th>
+                            <th>District</th>
+                            <th>Block</th>
+                            <th>Village Name</th>
+                            <th>Created By </th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         
-                        <a href="javascript:;" data-toggle="reload" data-bs-toggle="modal"
-                            data-bs-target="#villageModal"><i class="fas fa-plus"></i></a>
-
-                    </div>
-                    <h4 class="header-title mb-3">All Villages</h4>
+                    </tbody>
+                </table>
+            </div> <!-- end table-responsive -->
+  
+              </div> <!-- end card-body-->
+          </div> <!-- end card-->
     
-                    <div class="table-responsive">
-                        <table id="village_table" class="table table-striped table-nowrap table-centered mb-0">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>State</th>
-                                    <th>District</th>
-                                    <th>Block</th>
-                                    <th>Village Name</th>
-                                    <th>Created By </th>
-                                    
-                                    
-                                    <!-- <th>Village</th> -->
-                                    {% comment %} <th>Action</th> {% endcomment %}
-                                </tr>
-                            </thead>
-                            <tbody>
+      
+                <div class="content">
+                    <div class="col-xl-30">
+                        <div class="card">
+                            <div class="card-body">
                                 
-                            </tbody>
-                        </table>
-                        
+                        <h3 class="header-title mb-3">All Inactive Villages</h3>
     
-                        <!-- <a href="/Student_enrollment_system/user_auth/templates/temp/see_all_users.html">See
-                            All Users</a> -->
-                    </div> <!-- end table-responsive-->
-    
-                </div> <!-- end card-body-->
-            </div> <!-- end card-->
-        </div> 
+                        <div class="table-responsive">
+                            <table id="inactive_village_table" class="table table-striped table-nowrap table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>State</th>
+                                        <th>District</th>
+                                        <th>Block</th>
+                                        <th>Village Name</th>
+                                        <th>Created By</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div> <!-- end table-responsive -->
+                    </div> <!-- end col-xl-12 -->
+                </div> <!-- end content -->
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div> <!-- end content-page -->
 
 
+    <style>
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 26px;
+        }
+        
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        
+        .switch-slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: gray;
+          -webkit-transition: .4s;
+          transition: .4s;
+          border-radius: 26px;
+        }
+        
+        .switch-slider:before {
+          position: absolute;
+          content: "";
+          height: 20px;
+          width: 20px;
+          left: 3px;
+          bottom: 3px;
+          background-color: #fff;
+          -webkit-transition: .4s;
+          transition: .4s;
+          border-radius: 50%;
+        }
+        
+        .switch-input:checked + .switch-slider {
+          background-color: blue;
+        }
+        
+        .switch-input:focus + .switch-slider {
+          box-shadow: 0 0 1px blue;
+        }
+        
+        .switch-input:checked + .switch-slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+        </style>
 
         <div class="modal fade" id="villageModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
@@ -294,7 +370,8 @@
     </div>
 </div> <!--End The user DELETE Modal -->
 
-                
+    
+
                 {% include 'Student_template/footer.html' %}
 
                 {% block extra_js%}
@@ -556,45 +633,147 @@ $("document").ready(function () {
       
           });
       </script>
-      <Script>
+     
+    
+
+
+
+
+
+    <script>
         function getToken() {
-    // This function should return the user token dynamically
-    return (localStorage.getItem('token'));
-}
-
-$("document").ready(function () {
-    $('#village_table').DataTable({
-        ajax: {
-            url: 'http://127.0.0.1:8000/village_data/',
-            type: 'GET',
-            headers: { 'Authorization': `token ${getToken()}` },
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'id' },
-            { data: 'state' },
-            { data: 'district' },
-            { data: 'block' },
-            { data: 'name' },
-            { data: 'created_by.username' },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return '<a href="#" onclick="FetchvillageDetails(' + row.id + ');" data-toggle="modal" data-target="#Mentor_edit"><i class="fas fa-edit"></i></a> | <a href="#" onclick="deletevillage(' + row.id + ');" data-toggle="modal" data-target="#myModal"><i class="fas fa-trash-alt"></i></a>';
+            // This function should return the user token dynamically
+            return (localStorage.getItem('token'));
+        }
+        function updateVillageStatus(villageId, isActive) {
+            $.ajax({
+                url: `http://127.0.0.1:8000/village_data/${villageId}/status/`,
+                type: 'PUT',
+                headers: { 'Authorization': `token ${getToken()}` },
+                data: {
+                    is_active: isActive,
+                    village_id: villageId
+                },
+                success: function () {
+                    // Reload table after successful update
+                    $('#village_table').DataTable().ajax.reload(null, false);
+                },
+                error: function (xhr, textStatus, errorMessage) {
+                    console.log(errorMessage);
                 }
-            }
-        ],
-        searching: true,
-        ordering: true,
-        paging: true,
-        pageLength: 10
-    });
-});
+            });
+        }
+        
+    
+        $("document").ready(function () {
+            $('#village_table').DataTable({
+                ajax: {
+                    url: 'http://127.0.0.1:8000/village_data/',
+                    type: 'GET',
+                    headers: { 'Authorization': `token ${getToken()}` },
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'state' },
+                    { data: 'district' },
+                    { data: 'block' },
+                    { data: 'name' },
+                    { data: 'created_by.username' },
+                    {
+                        data: 'status',
+                        render: function (data, type, row) {
+                            if (data) {
+                                return `<label class="switch switch-rounded">
+                                            <input type="checkbox" class="switch-input" checked onclick="updateVillageStatus(${row.id}, false)">
+                                            <span class="switch-slider"></span>
+                                        </label>`;
+                            } else {
+                                return `<label class="switch switch-rounded">
+                                            <input type="checkbox" class="switch-input" onclick="updateVillageStatus(${row.id}, true)">
+                                            <span class="switch-slider"></span>
+                                        </label>`;
+                            }
+                        }
+                    }
+                ],
+                searching: true,
+                ordering: true,
+                paging: true,
+                pageLength: 10
+            });
+        });
+    </script>
+   
+    <script>
+        function getToken() {
+            // This function should return the user token dynamically
+            return (localStorage.getItem('token'));
+        }
+    
+        // Function to update village status
+        function updateVillageStatus(villageId, isActive) {
+            $.ajax({
+                url: `http://127.0.0.1:8000/village_data/${villageId}/status/`,
+                type: 'PUT',
+                headers: { 'Authorization': `token ${getToken()}` },
+                data: {
+                    is_active: isActive,
+                    village_id: villageId
+                },
+                success: function () {
+                    // Reload table after successful update
+                    $('#village_table').DataTable().ajax.reload(null, false);
 
-</Script>
-
+                    $('#inactive_village_table').DataTable().ajax.reload(null, false);
+                },
+                error: function (xhr, textStatus, errorMessage) {
+                    console.log(errorMessage);
+                }
+            });
+        }
+    
+        $(document).ready(function () {
+            $('#inactive_village_table').DataTable({
+                ajax: {
+                    url: 'http://127.0.0.1:8000/inactive_village_data/',
+                    type: 'GET',
+                    headers: { 'Authorization': `token ${getToken()}` },
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'state' },
+                    { data: 'district' },
+                    { data: 'block' },
+                    { data: 'name' },
+                    { data: 'created_by.username' },
+                    {
+                        data: 'status',
+                        render: function (data, type, row) {
+                            if (data) {
+                                return `<label class="switch switch-rounded">
+                                            <input type="checkbox" class="switch-input" checked onclick="updateVillageStatus(${row.id}, false)">
+                                            <span class="switch-slider"></span>
+                                        </label>`;
+                            } else {
+                                return `<label class="switch switch-rounded">
+                                            <input type="checkbox" class="switch-input" onclick="updateVillageStatus(${row.id}, true)">
+                                            <span class="switch-slider"></span>
+                                        </label>`;
+                            }
+                        }
+                    }
+                ],
+                searching: true,
+                ordering: true,
+                paging: true,
+                pageLength: 10
+            });
+        });
+    </script>
+    
 <script>
-
     function getToken() {
                     // This function should return the user token dynamically
                     return (localStorage.getItem('token'));
@@ -872,3 +1051,7 @@ $("document").ready(function () {
         
           {% endblock extra_js%}
           {% endblock %} 
+
+
+
+

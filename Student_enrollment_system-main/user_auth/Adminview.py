@@ -676,13 +676,54 @@ class Mentordetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class= MentorSerializer
 
 
-from .serializers import VillagedataSerializer
+from .serializers import VillagedataSerializer,InactiveVillagedataSerializer
 from .models import village
 
 class Villagedataview(generics.ListAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset=village.objects.all()
+    queryset=village.objects.all().filter(status=True)
     serializer_class= VillagedataSerializer
 
+class UpdateVillageStatus(generics.RetrieveUpdateAPIView):
+    queryset = village.objects.all()
+    serializer_class = VillagedataSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        obj = get_object_or_404(village, pk=self.kwargs['pk'])
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.status = not instance.status
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+
+# class UpdateVillageStatus(generics.RetrieveUpdateAPIView):
     
+#     queryset=village.objects.all()
+#     serializer_class = VillagedataSerializer
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
+
+#     def put(self, request, pk):
+#         village_obj = get_object_or_404(village, pk=pk)
+#         village_obj.status = not village_obj.status
+#         village_obj.save()
+#         serializer = VillagedataSerializer(village_obj)
+#         return Response(serializer.data)
+ 
+    
+class InactiveVillagedataview(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = InactiveVillagedataSerializer
+
+    def get_queryset(self):
+        return village.objects.filter(status=False)
+
+
