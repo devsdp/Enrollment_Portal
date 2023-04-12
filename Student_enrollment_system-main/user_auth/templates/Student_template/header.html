@@ -336,53 +336,135 @@
                                 </li>
                                     
                                 <div class="" id="sidebarDashboards">
-                                    <ul class="nav-second-level">
+                                    <!-- <ul class="nav-second-level">  -->
                                         <!-- <li id="state_create_s" class="hide" >
                                             <a href="/state_create_data">State</a>
                                         </li> -->
                                         <!-- <li id="block_create_s" class="hide">
                                             <a href="/block_create">District</a>
                                         </li> -->
-                                        <li id="program_s" class="hide">
-                                            <a href="/programslist">PROGRAMS</a>
+
+                                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingOne">
+                                                <button id="program_s" class="accordion-button collapsed hide" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                  Program 
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"><a href="/programslist">View Program</a></div>
+                                                <div class="accordion-body"><a href="/program_alloc">Program Allocation</a></div>
+                                              </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingTwo">
+                                                <button id="village_s" class="accordion-button collapsed hide" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                  Villages
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"><a href="/village">View Villages</a></div>
+                                              </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingThree">
+                                                <button id="user_create_s" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                    State User  
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"><a href="/all_states">View States</a></div>
+                                                <div class="accordion-body"><a href="/state_alloc">State Allocation</a></div>
+
+                                            </div>
+
+                                            </div>
+                                           
+                                          
+                                         <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingFour">
+                                                <button id="block_user_s" class="accordion-button collapsed hide" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                                    Block User  
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"><a href="/all_blocks">View Blocks</a></div>
+                                                <div class="accordion-body"><a href="/block_alloc">Block Allocation</a></div>
+
+                                              </div>
+                                            </div>
+                                              <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingFive">
+                                                <button id="mentor_data_s" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                                    Mentor  
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"> <a href="/all_mentors">View data</a></div>
+                                              </div>
+                                            </div>
+                                              <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingSix">
+                                                <button id="students_s" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                                    All Students 
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"><a href="/student_view_data">View data</a></div>
+                                              </div>
+                                            </div>
+                                              <div class="accordion-item">
+                                              <h2 class="accordion-header" id="flush-headingSeven">
+                                                <button id="all_states" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                                                    All Users
+                                                </button>
+                                              </h2>
+                                              <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body"><a href="/all_user_view">View data</a></div>
+                                              </div>
+                                            </div> 
+                                        </div>
+
+
+
+                                        <!-- <li id="program_s" class="hide">
+                                            <a href="/program">Program</a>
                                         </li>
                                         <li id="village_s" class="hide">
-                                            <a href="/village">VILLAGES</a>
-                                        </li>
+                                            <a href="/village">Villages</a>
+                                        </li> -->
+                                    </li>
                                     
-                                        <li id="mentor_data_s" class="hide">
-                                            <a href="/all_mentors">MENTOR</a>
-                                        </li>
-                                        <li id="user_create_s" class="hide">
-                                            <a href="/all_states">STATES</a>
-                                        </li>
-                                        <li id="block_user_s" class="hide">
+                                        <!-- <li id="user_create_s" class="hide">
+                                            <a href="/user_create">State User Create</a>
+                                        </li> -->
+                                        <!-- <li id="block_user_s" class="hide">
                                             <a href="/block_user">Block User Create</a>
-                                        </li>
-                                        {% comment %} <li id="state_allocation_s" class="hide">
+                                        </li> -->
+                                        <!-- <li id="mentor_data_s" class="hide">
+                                            <a href="/mentor_create_data">Mentor Create</a>
+                                        </li> -->
+
+
+                                        <!-- <li id="state_allocation_s" class="hide">
                                             <a href="/state_allocation">State Allocation</a>
-                                        </li> {% endcomment %}
-                                        <li id="block_alloc" class="hide">
-                                            <a href="/block_alloc">BLOCK ALLOCATION</a>
                                         </li>
-                                        <li id="students_s" class="hide">
-                                            <a href="/student_view_data">ALL STUDENTS</a>
-                                        </li>
-                                        <li id="all_user" class="hide">
-                                            <a href='/all_user_view'>ALL USERS</a>
-                                        </li>
-                                        <li id="all_blocks" class="hide">
-                                            <a href='/all_blocks'>BLOCKS</a>
-                                        </li>
-                                        <li id="state_alloc" class="hide">
-                                            <a href='/state_alloc'>STATE ALLOCATION</a>
-                                        </li>
-                                        <li id="program_alloc" class="hide">
-                                            <a href='/program_alloc'>PROGRAM ALLOCATION</a>
-                                        </li>
-                                         
+                                        <li id="block_allocate_s" class="hide">
+                                            <a href="/block_allocation">Block Allocation</a>
+                                        </li> -->
+
+
+                                        <!-- <li id="students_s" class="hide">
+                                            <a href="/student_view_data">All Students</a>
+                                        </li> -->
+                                        <!-- <li id="all_states" class="hide">
+                                            <a href="/all_states">All States</a>
+                                        </li> -->
+                                        
                                     </ul>
                                 </div>
+                       
+                        
                             </li>
                         </ul>
     

@@ -520,7 +520,7 @@ def state_alloc(request):
     context = {
         'state_allocs': state_allocs
     }
-    return render(request, 'Student_template/state_alloc.html', context)
+    return render(request, 'Student_template/state_user.html', context)
 
 def show_allocated_blocks(request):
     allocated_blocks = Block_allocation.objects.all()
@@ -573,3 +573,5 @@ def program_state_form(request):
 #         selected_program = request.POST.get('program')
 #         selected_state = request.POST.get('state')
 #     return render(request, 'student_template/program_alloc.html', {'states': states, 'programs': programs})
+
+
